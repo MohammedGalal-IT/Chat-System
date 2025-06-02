@@ -1,4 +1,4 @@
-package com.chatsystem.client;
+package com.chatsystem.client.Controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

@@ -13,4 +13,6 @@ module com.chatsystem.client {
 
     opens com.chatsystem.client to javafx.fxml;
     exports com.chatsystem.client;
+    exports com.chatsystem.client.Controller;
+    opens com.chatsystem.client.Controller to javafx.fxml;
 }
