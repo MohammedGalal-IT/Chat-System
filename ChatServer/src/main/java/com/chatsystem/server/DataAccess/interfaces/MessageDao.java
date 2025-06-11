@@ -10,4 +10,8 @@ public interface MessageDao {
     boolean update(Message message);
     boolean delete(int id);
     List<Message> getAllMessages();
+    List<Message> getUnreadMessages(int userId);
+    boolean markAsRead(int messageId);
+    List<Message> getMessagesBetweenUsers(int userId1, int userId2);
+    List<Message> getMessagesByType(int userId, Message.MessageType type);
 }
