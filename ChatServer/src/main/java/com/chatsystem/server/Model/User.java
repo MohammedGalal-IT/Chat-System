@@ -22,11 +22,11 @@ public class User {
     }
 
     public User(String username, String email, String password_hash, boolean isOnline) {
-        this(0, username, email, password_hash, isOnline, null, null);
+        this(-1, username, email, password_hash, isOnline, null, null);
     }
 
     public User(String username, String email, String password_hash) {
-        this(0, username, email, password_hash, false, null, null);
+        this(-1, username, email, password_hash, false, null, null);
     }
 
    
