@@ -63,6 +63,27 @@ public class DatabaseManager {
         return results;
     }
 
+    // Executes an INSERT and returns the generated key (e.g., for auto-increment IDs)
+    public static Integer executeInsertReturnGeneratedKey(String sql, Object... params) {
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            setParameters(stmt, params);
+            int affectedRows = stmt.executeUpdate();
+            if (affectedRows == 0) {
+                return null;
+            }
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    return generatedKeys.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     // Utility method to set parameters in PreparedStatement
     private static void setParameters(PreparedStatement stmt, Object... params) throws SQLException {
         for (int i = 0; i < params.length; i++) {
