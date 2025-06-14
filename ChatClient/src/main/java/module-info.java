@@ -10,6 +10,9 @@ module com.chatsystem.client {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
+    requires javafx.media;
+    requires java.sql;
+
 
     opens com.chatsystem.client to javafx.fxml;
     exports com.chatsystem.client;
