@@ -2,8 +2,10 @@ module com.chatsystem.server {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
+    requires javafx.media;
     requires java.sql;
- 
+    requires com.google.gson;
+    requires java.desktop;
 
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
