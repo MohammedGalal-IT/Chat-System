@@ -16,7 +16,7 @@ public class MessageDaoTest {
 
         // Test save
         Message msg = new Message(1, 2, MessageType.FILE, "Test file message", FileFormat.pdf, 12345L, "/server/path/file.pdf", "client/path/file.pdf");
-        boolean saved = messageDao.save(msg);
+        Message saved = messageDao.save(msg);
         System.out.println("Message saved: " + saved);
 
         // Test getById
