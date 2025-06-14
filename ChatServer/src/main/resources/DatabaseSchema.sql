@@ -21,7 +21,10 @@ CREATE TABLE messages (
     receiver_id INT NOT NULL,
     message_type ENUM('TEXT', 'IMAGE', 'VIDEO', 'AUDIO', 'FILE', 'EMOJI') NOT NULL,
     content TEXT,
-    file_path VARCHAR(200),  -- إذا كانت الرسالة تحتوي مرفقًا
+    file_format ENUM('jpg', 'png', 'mp4', 'mp3', 'pdf', 'docx', 'xlsx', 'zip', 'rar', 'txt'),
+    file_length BIGINT UNSIGNED,
+    file_path_server VARCHAR(200), 
+    file_path_client VARCHAR(200),
     is_read BOOLEAN DEFAULT FALSE,
     sent_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     is_deleted BOOLEAN DEFAULT FALSE,
