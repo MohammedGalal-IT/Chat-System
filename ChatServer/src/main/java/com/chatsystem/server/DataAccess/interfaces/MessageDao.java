@@ -6,7 +6,7 @@ import java.util.List;
 public interface MessageDao {
     Message getById(int id);
     List<Message> getByUserId(int userId);
-    boolean save(Message message);
+    Message save(Message message); // Changed to return Message for consistency
     boolean update(Message message);
     boolean delete(int id);
     List<Message> getAllMessages();

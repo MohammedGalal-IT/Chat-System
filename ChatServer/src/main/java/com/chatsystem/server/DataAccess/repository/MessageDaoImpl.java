@@ -52,8 +52,8 @@ public class MessageDaoImpl implements MessageDao {
     }
 
     @Override
-    public boolean save(Message message) {
-        return DatabaseManager.executeUpdate(
+    public Message save(Message message) {
+        Integer generatedId = DatabaseManager.executeInsertReturnGeneratedKey(
             "INSERT INTO messages (sender_id, receiver_id, message_type, content, file_format, file_length, file_path_server, file_path_client) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
             message.getSender_id(),
             message.getReceiver_id(),
@@ -63,7 +63,11 @@ public class MessageDaoImpl implements MessageDao {
             message.getFile_length(),
             message.getFile_path_server(),
             message.getFile_path_client()
-        ) > 0;
+        );
+        if (generatedId != null) {
+            return getById(generatedId);
+        }
+        return null;
     }
 
     @Override
@@ -117,7 +121,7 @@ public class MessageDaoImpl implements MessageDao {
     @Override
     public List<Message> getUnreadMessages(int userId) {
         return DatabaseManager.executeQueryList(
-            "SELECT * FROM messages WHERE (receiver_id = ? OR sender_id = ?) AND is_read = FALSE",
+            "SELECT * FROM messages WHERE (receiver_id = ?) AND is_read = FALSE",
             rs -> new Message(
                 rs.getInt("message_id"),
                 rs.getInt("sender_id"),
@@ -132,7 +136,7 @@ public class MessageDaoImpl implements MessageDao {
                 rs.getTimestamp("sent_at"),
                 rs.getBoolean("is_deleted")
             ),
-            userId, userId
+            userId
         );
     }
 
