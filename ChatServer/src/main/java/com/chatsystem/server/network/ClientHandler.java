@@ -2,7 +2,9 @@ package com.chatsystem.server.network;
 
 import com.chatsystem.server.Controller.AuthController;
 import com.chatsystem.server.Controller.UserController;
+import com.chatsystem.server.Model.User;
 import com.chatsystem.server.Model.Message.MessageType;
+import com.chatsystem.server.services.UserService;
 import com.chatsystem.server.Controller.MessageController;
 import com.chatsystem.server.Controller.FileController;
 import com.google.gson.Gson;
@@ -26,7 +28,7 @@ public class ClientHandler implements Runnable {
     private byte[] data;
     private volatile boolean running = true;
     private static final Map<String, ClientHandler> onlineUsers = new ConcurrentHashMap<>();
-    private String userKey = null; // Track the logged-in user's key (e.g., email or userId as string)
+    private String userKey = null; // user_id as key for online users
 
     public ClientHandler(Socket clientSocket) throws IOException {
         this.clientSocket = clientSocket;
@@ -86,14 +88,21 @@ public class ClientHandler implements Runnable {
                 catch (JsonSyntaxException e) {
                     // Handle invalid JSON
                     writer.println(gson.toJson(new Response(false, "Invalid JSON format")));
+                    System.out.println(e.getMessage());
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    System.out.println(e.getMessage());
+//                    e.printStackTrace();
+                    close();
                 } catch (Exception e) {
-                    e.printStackTrace();
+//                    e.printStackTrace();
+                    System.out.println(e.getMessage());
+                    close();
                 }
             }
         } catch (Exception e){
-            e.printStackTrace();
+//            e.printStackTrace();
+            System.out.println(e.getMessage());
+            close();
         } finally {
             close();
         }
@@ -104,7 +113,7 @@ public class ClientHandler implements Runnable {
             case LOGIN: {
                 Response response = authController.login(request);
                 if (response.isSuccess() && response.getUser() != null) {
-                    userKey = String.valueOf(response.getUser().getUserId());
+                    userKey = String.valueOf(response.getUser().getUser_id());
                     onlineUsers.put(userKey, this);
                 }
                 return response;
@@ -172,6 +181,11 @@ public class ClientHandler implements Runnable {
 
     public void close() {
         running = false;
+        if (userKey != null){
+            User user = new User(Integer.parseInt(userKey), null, null, null, false, null, null);
+            authController.logout(new Request(Action.LOGOUT, null, user, null));
+            onlineUsers.remove(userKey); // Remove from online users if userKey is set
+        }
         try {
             if (reader != null) reader.close();
             if (writer != null) writer.close();
