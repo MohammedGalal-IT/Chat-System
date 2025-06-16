@@ -89,7 +89,7 @@ public class UserDaoImpl implements UserDao {
                 user.getPasswordHash(), 
                 user.isOnline(), 
                 user.getProfilePicture(), 
-                user.getUserId()
+                user.getUser_id()
         ) > 0;
     }
 
