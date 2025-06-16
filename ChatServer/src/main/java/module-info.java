@@ -17,4 +17,6 @@ module com.chatsystem.server {
 
     opens com.chatsystem.server to javafx.fxml;
     exports com.chatsystem.server;
+    exports com.chatsystem.server.Model to com.google.gson;
+    exports com.chatsystem.server.network to com.google.gson;
 }
