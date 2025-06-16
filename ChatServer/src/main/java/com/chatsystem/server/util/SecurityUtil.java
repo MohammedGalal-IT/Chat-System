@@ -11,7 +11,12 @@ public class SecurityUtil {
 
     // تحقق من كلمة المرور
     public static boolean checkPassword(String plainPassword, String hashedPassword) {
-        return BCrypt.checkpw(plainPassword, hashedPassword);
+        try {
+            return BCrypt.checkpw(plainPassword, hashedPassword);
+        } catch (Exception e) {
+            System.out.println("Error checking password: " + e.getMessage());
+        }
+        return false;
     }
     
 }
