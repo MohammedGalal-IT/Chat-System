@@ -1,6 +1,7 @@
 package com.chatsystem.server.Controller;
 
 import com.chatsystem.server.Model.User;
+import com.chatsystem.server.network.Action;
 import com.chatsystem.server.network.Request;
 import com.chatsystem.server.network.Response;
 import com.chatsystem.server.services.AuthService;
@@ -29,9 +30,9 @@ public class AuthController {
     public Response login(Request request) {
         User user = authService.login(request.getUser().getEmail(), request.getUser().getPasswordHash());
         if (user != null) {
-            return new Response(true, "Login successful", user);
+            return new Response(true, "Login successful", user, Action.LOGIN);
         } else {
-            return new Response(false, "Invalid email or password", null);
+            return new Response(false, "Invalid email or password", null, Action.LOGIN);
         }
     }
 
@@ -39,16 +40,16 @@ public class AuthController {
     public Response register(Request request) {
         boolean success = authService.register(request.getUser().getUsername(), request.getUser().getEmail(), request.getUser().getPasswordHash());
         if (success) {
-            return new Response(true, "Registration successful");
+            return new Response(true, "Registration successful", Action.REGISTER);
         } else {
-            return new Response(false, "Email or username already taken");
+            return new Response(false, "Email or username already taken", Action.REGISTER);
         }
     }
 
     // تسجيل الخروج
     public Response logout(Request request) {
-        int userId = request.getUser().getUserId();
+        int userId = request.getUser().getUser_id();
         authService.logout(userId);
-        return new Response(true, "Logout successful");
+        return new Response(true, "Logout successful", Action.LOGOUT);
     }
 }

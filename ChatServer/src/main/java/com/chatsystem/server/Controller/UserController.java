@@ -39,11 +39,11 @@ public class UserController {
 
     // Get user by ID
     private Response getUserById(Request request) {
-        User user = userService.getUserById(((User)request.getData()[0]).getUserId());
+        User user = userService.getUserById(((User)request.getData()[0]).getUser_id());
         if (user != null) {
-            return new Response(true, "User found", user);
+            return new Response(true, "User found", user, request.getAction());
         } else {
-            return new Response(false, "User not found");
+            return new Response(false, "User not found", null, request.getAction());
         }
     }
 
@@ -51,54 +51,54 @@ public class UserController {
     private Response getUserByEmail(Request request) {
         User user = userService.getUserByEmail(((User)request.getData()[0]).getEmail());
         if (user != null) {
-            return new Response(true, "User found", user);
+            return new Response(true, "User found", user, request.getAction());
         } else {
-            return new Response(false, "User not found");
+            return new Response(false, "User not found", null, request.getAction());
         }
     }
 
     // Update user profile (username, email, avatar, etc.)
     private Response updateUser(Request request) {
         User targetUser = (User) request.getData()[0];
-        if(userService.getUserById(targetUser.getUserId()) == null){
-            return new Response(false, "User not found");
+        if(userService.getUserById(targetUser.getUser_id()) == null){
+            return new Response(false, "User not found", request.getAction());
         }
         boolean success = userService.updateUser(targetUser);
         if (success) {
-            return new Response(true, "User updated", null);
+            return new Response(true, "User updated", null, request.getAction());
         } else {
-            return new Response(false, "Update failed", null);
+            return new Response(false, "Update failed", null, request.getAction());
         }
     }
 
     // Update user profile_picture
     private Response updateProfilePicture(Request request) {
-        int userId = ((User) request.getData()[0]).getUserId();
+        int userId = ((User) request.getData()[0]).getUser_id();
         String profilePicturePath = (String) request.getData()[1];
 
         if(userService.getUserById(userId) == null && (profilePicturePath == null || profilePicturePath.isEmpty())){
-            return new Response(false, "User not found");
+            return new Response(false, "User not found", request.getAction());
         }
         boolean success = userService.setProfilePicture(userId, profilePicturePath);
         if (success) {
-            return new Response(true, "Profile picture updated");
+            return new Response(true, "Profile picture updated", null, request.getAction());
         } else {
-            return new Response(false, "Profile picture update failed");
+            return new Response(false, "Profile picture update failed", null, request.getAction());
         }
     }
 
     // Change password
     private Response changePassword(Request request) {
-        int userId = ((User) request.getData()[0]).getUserId();
+        int userId = ((User) request.getData()[0]).getUser_id();
         String newPassword = (String) request.getData()[1];
         if(userService.getUserById(userId) == null && (newPassword == null || newPassword.isEmpty())){
-            return new Response(false, "User not found");
+            return new Response(false, "User not found", request.getAction());
         }
         boolean success = userService.changePassword(userId, newPassword);
         if (success) {
-            return new Response(true, "Password changed");
+            return new Response(true, "Password changed", null, request.getAction());
         } else {
-            return new Response(false, "Password change failed");
+            return new Response(false, "Password change failed", null, request.getAction());
         }
     }
 
@@ -107,9 +107,9 @@ public class UserController {
         String username = (String) request.getData()[0];
         List<User> users = userService.searchByUsername(username);
         if (users.isEmpty() || users == null) {
-            return new Response(false, "No users found");
+            return new Response(false, "No users found", null, request.getAction());
         }
-        Response response = new Response(true, "Users found");
+        Response response = new Response(true, "Users found", null, request.getAction());
         response.setUsers(users);
         return response;
     }
@@ -118,9 +118,9 @@ public class UserController {
     private Response getAllUsers(Request request) {
         List<User> users = userService.getAllUsers();
         if (users.isEmpty() || users == null) {
-            return new Response(false, "No users found");
+            return new Response(false, "No users found", null, request.getAction());
         }
-        Response response = new Response(true, "Users found");
+        Response response = new Response(true, "Users found", null, request.getAction());
         response.setUsers(users);
         return response;
     }
@@ -129,9 +129,9 @@ public class UserController {
     private Response getOnlineUsers(Request request) {
         List<User> onlineUsers = userService.getOnlineUsers();
         if (onlineUsers.isEmpty() || onlineUsers == null) {
-            return new Response(false, "No online users found");
+            return new Response(false, "No online users found", null, request.getAction());
         }
-        Response response = new Response(true, "Online users found");
+        Response response = new Response(true, "Online users found", null, request.getAction());
         response.setUsers(onlineUsers);
         return response;
     }

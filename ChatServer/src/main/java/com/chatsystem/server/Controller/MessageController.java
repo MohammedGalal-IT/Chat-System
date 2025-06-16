@@ -50,6 +50,7 @@ public class MessageController {
             response.setSuccess(true);
             response.setMessage("Message sent");
              response.setMessageObj(message);
+             request.setAction(request.getAction());
             return response;
         } else {
             return new Response(false, "Failed to send message");
@@ -69,6 +70,7 @@ public class MessageController {
             response.setSuccess(true);
             response.setMessage("Message sent");
             response.setMessageObj(message);
+            request.setAction(request.getAction());
             return response;
         } else {
             return new Response(false, "Failed to send message");
@@ -77,12 +79,13 @@ public class MessageController {
 
     // Get messages between two users
     private Response getMessagesBetweenUsers(Request request) {
-        int userId1 = ((User) request.getData()[0]).getUserId();
-        int userId2 = ((User) request.getData()[1]).getUserId();
+        int userId1 = ((User) request.getData()[0]).getUser_id();
+        int userId2 = ((User) request.getData()[1]).getUser_id();
         List<Message> messages = messageService.getMessagesBetweenUsers(userId1, userId2);
         if (messages != null && !messages.isEmpty()) {
             Response response = new Response(true, "Messages found");
             response.setMessages(messages);
+            response.setAction(request.getAction());
             return response;
         } else {
             return new Response(false, "No messages found");
@@ -91,11 +94,12 @@ public class MessageController {
 
     // Get unread messages for a user
     private Response getUnreadMessages(Request request) {
-        int userId = ((User) request.getData()[0]).getUserId();
+        int userId = ((User) request.getData()[0]).getUser_id();
         List<Message> messages = messageService.getUnreadMessages(userId);
         if (messages != null && !messages.isEmpty()) {
             Response response = new Response(true, "Unread messages found");
             response.setMessages(messages);
+            response.setAction(request.getAction());
             return response;
         } else {
             return new Response(false, "No unread messages");
@@ -107,23 +111,24 @@ public class MessageController {
         int messageId = request.getMessage().getMessage_id();
         boolean success = messageService.markAsRead(messageId);
         if (success) {
-            return new Response(true, "Messages marked as read");
+            return new Response(true, "Messages marked as read", request.getAction());
         } else {
-            return new Response(false, "Failed to mark messages as read");
+            return new Response(false, "Failed to mark messages as read", request.getAction());
         }
     }
 
     // Get messages by type
     private Response getMessagesByType(Request request) {
-        int userId = ((User) request.getData()[0]).getUserId();
+        int userId = ((User) request.getData()[0]).getUser_id();
         MessageType type  = ((Message) request.getData()[1]).getMessage_type();
         List<Message> messages = messageService.getMessagesByType(userId, type);
         if (messages != null && !messages.isEmpty()) {
             Response response = new Response(true, "Messages found");
             response.setMessages(messages);
+            response.setAction(request.getAction());
             return response;
         } else {
-            return new Response(false, "No messages found for type");
+            return new Response(false, "No messages found for type", request.getAction());
         }
     }
 
@@ -135,9 +140,9 @@ public class MessageController {
         int messageId = ((Message) request.getData()[0]).getMessage_id();
         boolean success = messageService.deleteMessage(messageId);
         if (success) {
-            return new Response(true, "Message deleted");
+            return new Response(true, "Message deleted", request.getAction());
         } else {
-            return new Response(false, "Failed to delete message");
+            return new Response(false, "Failed to delete message", request.getAction());
         }
     }
 }
