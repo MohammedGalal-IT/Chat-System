@@ -3,15 +3,17 @@ package com.chatsystem.server;
 
 import com.chatsystem.server.network.ClientHandler;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class ServerMain {
-    private static final int PORT = 5000;
+    private static final int PORT = 8000;
 
     public static void main(String[] args) {
         System.out.println("[Server] Starting Chat Server on port " + PORT + "...");
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
+            System.out.println("[Server] Server Address: " + InetAddress.getLocalHost().getHostAddress());
             System.out.println("[Server] Server started. Waiting for clients...");
             while (true) {
                 Socket clientSocket = serverSocket.accept();
@@ -21,7 +23,7 @@ public class ServerMain {
             }
         } catch (IOException e) {
             System.err.println("[Server] Error: " + e.getMessage());
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         System.out.println("[Server] Server stopped.");
     }
