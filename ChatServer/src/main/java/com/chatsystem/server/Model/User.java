@@ -2,14 +2,15 @@ package com.chatsystem.server.Model;
 
 import java.sql.Timestamp;
 
+
 public class User {
-    private int user_id;
-    private String username;
-    private String email;
-    private String password_hash;
-    private boolean isOnline;
-    private String profile_picture;
-    private Timestamp createdAt;
+    public int user_id;
+    public String username;
+    public String email;
+    public String password_hash;
+    public boolean isOnline;
+    public String profile_picture;
+    public Timestamp createdAt;
 
     public User(int user_id, String username, String email, String password_hash, boolean isOnline, String profile_picture, Timestamp createdAt) {
         this.user_id = user_id;
@@ -30,8 +31,12 @@ public class User {
     }
 
    
-    public int getUserId() {
+    public int getUser_id() {
         return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
     public String getUsername() {

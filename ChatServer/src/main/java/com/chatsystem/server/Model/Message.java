@@ -6,18 +6,18 @@ import java.time.LocalDateTime;
 
 public class Message {
 
-    private final int message_id;
-    private int sender_id;
-    private int receiver_id;
-    private MessageType message_type;
-    private String content;
-    private FileFormat file_format;
-    private long file_length;
-    private String file_path_server;
-    private String file_path_client;
-    private boolean is_read;
-    private Timestamp sentAt;
-    private boolean isDeleted;
+    public int message_id;
+    public int sender_id;
+    public int receiver_id;
+    public MessageType message_type;
+    public String content;
+    public FileFormat file_format;
+    public long file_length;
+    public String file_path_server;
+    public String file_path_client;
+    public boolean is_read;
+    public Timestamp sentAt;
+    public boolean isDeleted;
 
 
     public enum MessageType {
@@ -28,6 +28,9 @@ public class Message {
         jpg, png, mp4, mp3, pdf, docx, xlsx, zip, rar, txt
     }
 
+    public Message() {
+        
+    }
 
     public Message(int message_id, int sender_id, int receiver_id, MessageType message_type, String content, FileFormat file_format, long file_length, String file_path_server, String file_path_client, boolean is_read, Timestamp sentAt, boolean isDeleted) {
         this.message_id = message_id;
@@ -50,6 +53,10 @@ public class Message {
 
     public int getMessage_id() {
         return message_id;
+    }
+
+    public void setMessage_id(int message_id) {
+        this.message_id = message_id;
     }
     
     public int getSender_id() {
