@@ -21,9 +21,9 @@ public class MessageControllerTest {
         sender = userService.getUserByEmail(sender.getEmail());
         receiver = userService.getUserByEmail(receiver.getEmail());
 
-        Message textMessage = new Message(sender.getUserId(), receiver.getUserId(), MessageType.TEXT, "Hello from MessageControllerTest", null, 0, null, null);
+        Message textMessage = new Message(sender.getUser_id(), receiver.getUser_id(), MessageType.TEXT, "Hello from MessageControllerTest", null, 0, null, null);
         // Create a file message
-        Message fileMessage = new Message(sender.getUserId(), receiver.getUserId(), MessageType.IMAGE, null, Message.FileFormat.jpg, 1234, "/server/path.jpg", "/client/path.jpg");
+        Message fileMessage = new Message(sender.getUser_id(), receiver.getUser_id(), MessageType.IMAGE, null, Message.FileFormat.jpg, 1234, "/server/path.jpg", "/client/path.jpg");
 
         // Test send text message
         Request sendTextReq = new Request();

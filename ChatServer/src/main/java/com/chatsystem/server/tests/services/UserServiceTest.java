@@ -18,7 +18,7 @@ public class UserServiceTest {
 
         // Test get user by id
         if (user != null) {
-            User byId = userService.getUserById(user.getUserId());
+            User byId = userService.getUserById(user.getUser_id());
             System.out.println("Get by id: " + (byId != null ? byId : "Not found"));
         }
 
@@ -27,19 +27,19 @@ public class UserServiceTest {
             user.setUsername("usertest_updated");
             boolean updated = userService.updateUser(user);
             System.out.println("User updated: " + updated);
-            User updatedUser = userService.getUserById(user.getUserId());
+            User updatedUser = userService.getUserById(user.getUser_id());
             System.out.println("After update: " + updatedUser);
         }
 
         // Test set profile picture
         if (user != null) {
-            boolean picSet = userService.setProfilePicture(user.getUserId(), "/uploads/images/profile.jpg");
+            boolean picSet = userService.setProfilePicture(user.getUser_id(), "/uploads/images/profile.jpg");
             System.out.println("Profile picture set: " + picSet);
         }
 
         // Test change password
         if (user != null) {
-            boolean pwChanged = userService.changePassword(user.getUserId(), "newhashedpassword");
+            boolean pwChanged = userService.changePassword(user.getUser_id(), "newhashedpassword");
             System.out.println("Password changed: " + pwChanged);
         }
 
@@ -57,7 +57,7 @@ public class UserServiceTest {
 
         // Test delete user
         if (user != null) {
-            boolean deleted = userService.deleteUser(user.getUserId());
+            boolean deleted = userService.deleteUser(user.getUser_id());
             System.out.println("User deleted: " + deleted);
         }
     }

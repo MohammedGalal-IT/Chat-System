@@ -30,7 +30,7 @@ public class UserDaoTest {
         System.out.println("All users: " + allUsers);
 
         // Test getById
-        int userId = fetchedByUsername != null ? fetchedByUsername.getUserId() : -1;
+        int userId = fetchedByUsername != null ? fetchedByUsername.getUser_id() : -1;
         User fetchedById = userDao.getById(userId);
         System.out.println("Fetched by ID: " + fetchedById);
 

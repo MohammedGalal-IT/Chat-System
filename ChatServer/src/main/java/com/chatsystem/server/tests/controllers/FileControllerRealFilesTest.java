@@ -45,7 +45,7 @@ public class FileControllerRealFilesTest {
             }
             long fileLength = file.length();
             InputStream fileStream = new FileInputStream(file);
-            Message fileMessage = new Message(sender.getUserId(), receiver.getUserId(), type, null, format, fileLength, null, null);
+            Message fileMessage = new Message(sender.getUser_id(), receiver.getUser_id(), type, null, format, fileLength, null, null);
             fileMessage.setFile_length(fileLength);
             Request saveReq = new Request();
             saveReq.setMessage(fileMessage);

@@ -21,7 +21,7 @@ public class FileControllerTest {
         // Prepare a test user and message
         User sender = new User("fileuser", "fileuser@example.com", "pass");
         User receiver = new User("fileuser2", "fileuser2@example.com", "pass");
-        Message fileMessage = new Message(sender.getUserId(), receiver.getUserId(), MessageType.IMAGE, null, FileFormat.jpg, 10, null, null);
+        Message fileMessage = new Message(sender.getUser_id(), receiver.getUser_id(), MessageType.IMAGE, null, FileFormat.jpg, 10, null, null);
 
         // Simulate file content
         byte[] fileBytes = "testimagecontent".getBytes(StandardCharsets.UTF_8);
