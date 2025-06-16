@@ -16,7 +16,7 @@ public class AuthService {
     public User login(String email, String password) {
         User user = userDao.getByEmail(email);
         if(user != null && SecurityUtil.checkPassword(password, user.getPasswordHash())) {
-            userDao.setOnline(user.getUserId());
+            userDao.setOnline(user.getUser_id());
             return user; 
         }
         return null;

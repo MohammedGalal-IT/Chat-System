@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -115,6 +116,11 @@ public class FileService {
     public  byte[] readFile(String fileUrl) throws IOException {
         Path filePath = Paths.get(fileUrl);
         return Files.readAllBytes(filePath);
+    }
+
+    public void getFile(String fileUrl, OutputStream out) throws IOException{
+        out.write(readFile(fileUrl));
+        out.flush();
     }
 
     public  void writeFile(byte[] bytes, String fileUrl) throws IOException {
