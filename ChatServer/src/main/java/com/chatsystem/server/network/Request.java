@@ -4,14 +4,13 @@ import com.chatsystem.server.Model.Message;
 import com.chatsystem.server.Model.User;
 
 
-
 public class Request {
 
-    private Action action;
-    private String token;
-    private User user;
-    private Message message;
-    private Object[] data;
+    public Action action;
+    public String token;
+    public User user;
+    public Message message;
+    public Object[] data;
 
     public Request(){}
 
@@ -68,7 +67,7 @@ public class Request {
                 ", token='" + token + '\'' +
                 ", user=" + user +
                 ", message=" + message +
-                ", data=" + data[0] +
+                ", data=" + (data==null? "null":data[0]) +
                 '}';
     }
 }
