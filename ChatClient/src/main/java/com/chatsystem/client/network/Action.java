@@ -4,6 +4,7 @@ public enum Action{
     LOGIN,
     REGISTER,
     LOGOUT,
+    REFRESH,
 
     GET_USER_BY_ID,
     GET_USER_BY_EMAIL,
@@ -15,6 +16,7 @@ public enum Action{
     GET_ONLINE_USERS,
 
     SEND_MESSAGE,
+    RECEIVE_MESSAGE,
     SEND_MESSAGE_WITH_ATTACHMENT, //
     DELETE_MESSAGE,
     UPDATE_MESSAGE,
@@ -23,6 +25,15 @@ public enum Action{
     GET_MESSAGES_BETWEEN_USERS,
     GET_UNREAD_MESSAGES,
     MARK_MESSAGES_AS_READ,
-    GET_MESSAGES_BY_TYPE
+    GET_MESSAGES_BY_TYPE;
+
+     public static Action fromString(String text) {
+        for (Action action : Action.values()) {
+            if (action.name().equalsIgnoreCase(text)) {
+                return action;
+            }
+        }
+        return null;
+    }
     
 }
