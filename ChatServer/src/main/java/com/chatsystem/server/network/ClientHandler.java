@@ -4,6 +4,7 @@ import com.chatsystem.server.Controller.AuthController;
 import com.chatsystem.server.Controller.UserController;
 import com.chatsystem.server.Model.User;
 import com.chatsystem.server.Model.Message.MessageType;
+import com.chatsystem.server.services.MessageService;
 import com.chatsystem.server.services.UserService;
 import com.chatsystem.server.Controller.MessageController;
 import com.chatsystem.server.Controller.FileController;
@@ -50,12 +51,20 @@ public class ClientHandler implements Runnable {
                     if (requestJson == null) break;
 
                     Request request = gson.fromJson(requestJson, Request.class);
+                    System.out.println("Received a Request form: " + clientSocket.getInetAddress().getHostName() + ", Request: " + request.getAction());
                     Response response = null;
 
                     if(request.getAction() != Action.SEND_MESSAGE_WITH_ATTACHMENT){
                         response = handleRequest(request);
+                        if(response.getAction() == null) {
+                            response = new Response(false, "Failed to process request", request.getAction());
+                            System.out.println("The Response Action is null ");
+                        }
                         String responseJson = gson.toJson(response);
                         writer.println(responseJson); // Send response back to client
+                        if(response.getAction() == Action.LOGIN){
+                            broadcastToOnlineUsers(new Response(true, "new user is online", Action.REFRESH));
+                        }
 
                         if(request.getAction() == Action.SEND_MESSAGE){
                             // Handle sending message
@@ -64,6 +73,11 @@ public class ClientHandler implements Runnable {
                                 String receiverKey = String.valueOf(response.getMessageObj().getReceiver_id());
                                 ClientHandler receiverHandler = getOnlineUser(receiverKey); 
                                 if(receiverHandler != null && receiverHandler.running){
+                                    // update message to be read
+                                    response.getMessageObj().setIs_read(true);
+                                    new MessageService().updateMessage(response.getMessageObj());
+                                    response.setAction(Action.RECEIVE_MESSAGE);
+                                    responseJson = gson.toJson(response);
                                     receiverHandler.writer.println(responseJson);
                                 }
                             }
@@ -87,11 +101,11 @@ public class ClientHandler implements Runnable {
                 }
                 catch (JsonSyntaxException e) {
                     // Handle invalid JSON
-                    writer.println(gson.toJson(new Response(false, "Invalid JSON format")));
+                    writer.println(gson.toJson(new Response(false, "Invalid JSON format",Action.SEND_MESSAGE)));
                     System.out.println(e.getMessage());
                 } catch (IOException e) {
                     System.out.println(e.getMessage());
-//                    e.printStackTrace();
+                    handleRequest(new Request(Action.LOGOUT, null, new User(Integer.parseInt(userKey), null, null, null, running, null, null), null));
                     close();
                 } catch (Exception e) {
 //                    e.printStackTrace();
@@ -123,7 +137,9 @@ public class ClientHandler implements Runnable {
                     onlineUsers.remove(userKey);
                     userKey = null;
                 }
-                return authController.logout(request);
+                Response response = authController.logout(request);
+                broadcastToOnlineUsers(new Response(true, "a user logout", Action.REFRESH));
+                return response;
             }
             case REGISTER:
                 return authController.register(request);
@@ -145,7 +161,7 @@ public class ClientHandler implements Runnable {
                 return userController.executeRequest(request);
             // File actions are not in Action enum, so remove them for now
             default:
-                return new Response(false, "Unknown action");
+                return new Response(false, "Unknown action", request.getAction());
         }
     }
 
@@ -154,7 +170,7 @@ public class ClientHandler implements Runnable {
             if(request.getAction() == Action.SEND_MESSAGE_WITH_ATTACHMENT) {
                 request = fileController.saveFile(request, clientSocket.getInputStream());
                 if (request == null) {
-                    return new Response(false, "File handling failed");
+                    return new Response(false, "File handling failed", Action.SEND_MESSAGE_WITH_ATTACHMENT);
                 }
                 
                 Response response =  handleRequest(request);
@@ -164,9 +180,10 @@ public class ClientHandler implements Runnable {
                 }
             }
         } catch (IOException e){
-            e.printStackTrace();
+            System.out.println(e.getMessage());
+//            e.printStackTrace();
         }
-        return new Response(false, "File handling failed");
+        return new Response(false, "File handling failed", Action.SEND_MESSAGE_WITH_ATTACHMENT);
     }
 
     public static ClientHandler getOnlineUser(String key) {
@@ -174,6 +191,7 @@ public class ClientHandler implements Runnable {
     }
 
    public static void broadcastToOnlineUsers(Response response) {
+        System.out.println("broadcastToOnlineUsers ...");
        for (ClientHandler handler : onlineUsers.values()) {
          handler.writer.println(handler.gson.toJson(response));
        }
