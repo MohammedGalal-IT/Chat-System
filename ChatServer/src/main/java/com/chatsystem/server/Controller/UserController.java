@@ -33,7 +33,7 @@ public class UserController {
             case GET_ONLINE_USERS:
                 return getOnlineUsers(request);
             default:
-                return new Response(false, "Invalid Action");
+                return new Response(false, "Invalid Action", request.getAction());
         }
     }
 
