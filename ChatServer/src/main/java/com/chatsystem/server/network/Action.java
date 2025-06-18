@@ -4,6 +4,7 @@ public enum Action{
     LOGIN,
     REGISTER,
     LOGOUT,
+    REFRESH,
 
     GET_USER_BY_ID,
     GET_USER_BY_EMAIL,
@@ -15,6 +16,7 @@ public enum Action{
     GET_ONLINE_USERS,
 
     SEND_MESSAGE,
+    RECEIVE_MESSAGE,
     SEND_MESSAGE_WITH_ATTACHMENT, //
     DELETE_MESSAGE,
     UPDATE_MESSAGE,
