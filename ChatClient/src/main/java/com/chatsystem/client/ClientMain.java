@@ -1,23 +1,30 @@
 package com.chatsystem.client;
 
+
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import com.chatsystem.client.util.SceneManager;
 
 public class ClientMain extends Application {
+
     @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(ClientMain.class.getResource("ClientMain.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Hello!");
-        stage.setScene(scene);
-        stage.show();
+    public void start(Stage primaryStage) {
+        try {
+            SceneManager.setStage(primaryStage);
+            primaryStage.setResizable(false);
+            primaryStage.getIcons().add(new Image(ClientMain.class.getResource("Assets/chat_icon.png").toExternalForm()));
+            SceneManager.switchScene("LoginView.fxml", "Chat System - Login");
+            primaryStage.show();
+        } catch (Exception e) {
+            System.err.println("Failed to load LoginView: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
-        launch();
+        launch(args);
     }
 }
+
