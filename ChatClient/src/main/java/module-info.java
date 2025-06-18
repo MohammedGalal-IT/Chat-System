@@ -12,10 +12,19 @@ module com.chatsystem.client {
     requires eu.hansolo.tilesfx;
     requires javafx.media;
     requires java.sql;
+    requires com.google.gson;
+    requires com.dustinredmond.fxalert;
 
 
     opens com.chatsystem.client to javafx.fxml;
     exports com.chatsystem.client;
+    exports com.chatsystem.client.app;
+    opens com.chatsystem.client.app to javafx.fxml;
     exports com.chatsystem.client.Controller;
     opens com.chatsystem.client.Controller to javafx.fxml;
+    exports com.chatsystem.client.test;
+    opens com.chatsystem.client.test to javafx.fxml;
+    exports com.chatsystem.client.Model to com.google.gson;
+    exports com.chatsystem.client.network to com.google.gson;
+
 }
