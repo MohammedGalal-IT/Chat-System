@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="999.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+   <!-- Sidebar (Contacts) -->
+   <left>
+      <VBox alignment="TOP_CENTER" prefHeight="498.0" prefWidth="186.0" spacing="5" style="-fx-background-color: #fff; -fx-padding: 2; -fx-border-color: #fff;" BorderPane.alignment="CENTER">
+         <VBox alignment="CENTER" prefHeight="50.0" prefWidth="180.0" style="-fx-background-color: #3E2F73; -fx-background-radius: 5;">
+            <children>
+               <Label style="-fx-font-weight: bold;" text="Contacts" textFill="WHITE">
+                  <font>
+                     <Font name="Cairo Regular" size="16.0" />
+                  </font>
+               </Label>
+            </children>
+         </VBox>
+         <ListView fx:id="contactListView" prefHeight="574.0" prefWidth="180.0" style="-fx-background-radius: 5; -fx-background-color: #f1edf7;" />
+      </VBox>
+   </left>
+
+   <!-- Chat area -->
+   <center>
+      <VBox prefHeight="484.0" prefWidth="572.0" spacing="5.0" style="-fx-padding: 2 7 2 2; -fx-background-color: #fff; -fx-border-color: #fff;" BorderPane.alignment="CENTER">
+         <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" prefHeight="41.0" prefWidth="566.0" style="-fx-background-color: #3E2F73; -fx-padding: 5 20; -fx-background-radius: 5; -fx-spacing: 20;">
+            <children>
+               <Label contentDisplay="RIGHT" style="-fx-font-weight: bold;" text="Select A User to Chat" textAlignment="RIGHT" textFill="WHITE">
+                  <font>
+                     <Font name="Cairo Regular" size="16.0" />
+                  </font>
+               </Label>
+               <ImageView fitHeight="40.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-radius: 50%;">
+                  <image>
+                     <Image url="@../../../../../../../../../../../../Pictures/profile-icon.png" />
+                  </image>
+               </ImageView>
+            </children>
+         </HBox>
+         <ScrollPane fx:id="chatScrollPane" fitToHeight="true" fitToWidth="true" prefHeight="534.0" prefWidth="802.0" style="-fx-background-color: #f1edf7;">
+            <content>
+               <VBox fillWidth="false" prefHeight="356.0" prefWidth="559.0" style="-fx-background-color: #f1edf7; -fx-padding: 10; -fx-spacing: 10;">
+                  <children>
+                     <VBox fx:id="receivedMessage" alignment="CENTER_LEFT" prefHeight="76.0" prefWidth="514.0" style="-fx-background-color: #e5f280; -fx-background-radius: 10; -fx-alignment: right; -fx-padding: 15 15 10 15; -fx-spacing: 10;">
+                        <children>
+                           <TextFlow prefHeight="192.0" prefWidth="484.0">
+                              <children>
+                                 <Text fx:id="receivedMessage_text" strokeType="OUTSIDE" strokeWidth="0.0" text="Hello, Please Select a User to caht">
+                                    <font>
+                                       <Font name="Cairo Regular" size="12.0" />
+                                    </font>
+                                 </Text>
+                              </children>
+                           </TextFlow>
+                           <HBox prefHeight="18.0" prefWidth="476.0" style="-fx-spacing: 10; -fx-background-color: #f0faa7; -fx-padding: 2 10; -fx-background-radius: 20;">
+                              <children>
+                                 <Label fx:id="receivedMessage_user" text="Mohammed Galal">
+                                    <font>
+                                       <Font size="9.0" />
+                                    </font>
+                                 </Label>
+                                 <HBox alignment="CENTER_RIGHT" prefHeight="14.0" prefWidth="374.0" style="-fx-background-radius: 20;">
+                                    <children>
+                                       <Label fx:id="receivedMessage_date" alignment="CENTER_RIGHT" prefHeight="14.0" prefWidth="82.0" text="2025-5-12:12:55">
+                                          <font>
+                                             <Font size="9.0" />
+                                          </font>
+                                       </Label>
+                                    </children>
+                                 </HBox>
+                              </children>
+                           </HBox>
+                        </children>
+                     </VBox>
+                     <VBox fx:id="sendMessage" alignment="CENTER_LEFT" prefHeight="76.0" prefWidth="514.0" style="-fx-background-color: #d7c8e3; -fx-background-radius: 10; -fx-alignment: right; -fx-padding: 15 15 10 15; -fx-spacing: 10;">
+                        <children>
+                           <TextFlow prefHeight="192.0" prefWidth="484.0">
+                              <children>
+                                 <Text fx:id="sendMessage_text" strokeType="OUTSIDE" strokeWidth="0.0" text="Hello, Please Select a User to caht">
+                                    <font>
+                                       <Font name="Cairo Regular" size="12.0" />
+                                    </font>
+                                 </Text>
+                              </children>
+                           </TextFlow>
+                           <HBox prefHeight="18.0" prefWidth="476.0" style="-fx-spacing: 10; -fx-background-color: #f3ebfa; -fx-padding: 2 10; -fx-background-radius: 20;" VBox.vgrow="ALWAYS">
+                              <children>
+                                 <Label fx:id="sendMessage_user" text="Mohammed Galal">
+                                    <font>
+                                       <Font size="9.0" />
+                                    </font>
+                                 </Label>
+                                 <HBox alignment="CENTER_RIGHT" prefHeight="14.0" prefWidth="374.0" style="-fx-background-radius: 20;">
+                                    <children>
+                                       <Label fx:id="sendMessage_date" alignment="CENTER_RIGHT" prefHeight="14.0" prefWidth="82.0" text="2025-5-12:12:55">
+                                          <font>
+                                             <Font size="9.0" />
+                                          </font>
+                                       </Label>
+                                    </children>
+                                 </HBox>
+                              </children>
+                           </HBox>
+                        </children>
+                     </VBox>
+                  </children></VBox>
+            </content>
+         </ScrollPane>
+         <HBox alignment="CENTER" spacing="5">
+            <TextField fx:id="messageTextField" prefHeight="34.0" prefWidth="462.0" promptText="Type your message..." HBox.hgrow="ALWAYS" />
+            <Button fx:id="sendButton" onAction="#onSendMessage" prefHeight="34.0" prefWidth="51.0" style="-fx-background-color: #3E2F73;" text="Send" textFill="#fafafa">
+               <font>
+                  <Font name="Cairo Black" size="12.0" />
+               </font></Button>
+            <Button fx:id="insertButton" onAction="#onSendMessage" prefHeight="34.0" prefWidth="57.0" style="-fx-background-color: #3E2F73;" text="Insert" textFill="WHITE">
+               <font>
+                  <Font name="Cairo Black" size="12.0" />
+               </font></Button>
+         </HBox>
+      </VBox>
+   </center>
+</BorderPane>
