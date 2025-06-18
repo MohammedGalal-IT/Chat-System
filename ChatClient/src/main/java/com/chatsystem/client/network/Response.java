@@ -6,13 +6,14 @@ import java.util.List;
 
 public class Response {
 
-    private boolean success;
-    private String message;
-    private String token;
-    private User user;
-    private Message messageObj;  // لتفادي التضارب مع "message" كنص
-    private List<Message> messages;
-    private List<User> users;
+    public boolean success;
+    public String message;
+    public String token;
+    public User user;
+    public Message messageObj;  
+    public List<Message> messages;
+    public List<User> users;
+    public Action action; 
 
     public Response() {}
 
@@ -21,10 +22,17 @@ public class Response {
         this.message = message;
     }
 
-    public Response(boolean success, String message, User user) {
+    public Response(boolean success, String message, User user, Action action) {
         this.success = success;
         this.message = message;
         this.user = user;
+        this.action = action;
+    }
+
+    public Response(boolean success, String message, Action action) {
+        this.success = success;
+        this.message = message;
+        this.action = action;
     }
 
     // Getters & Setters
@@ -84,6 +92,14 @@ public class Response {
         this.users = users;
     }
 
+    public Action getAction() {
+        return action;
+    }
+
+    public void setAction(Action action) {
+        this.action = action;
+    }
+
     @Override
     public String toString() {
         return "Response{" +
@@ -94,6 +110,7 @@ public class Response {
                 ", messageObj=" + messageObj +
                 ", messages=" + messages +
                 ", users=" + users +
+                ", action=" + action.toString() +
                 '}';
     }
 }
