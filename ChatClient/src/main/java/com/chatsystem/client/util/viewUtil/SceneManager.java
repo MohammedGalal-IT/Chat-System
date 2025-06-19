@@ -1,4 +1,4 @@
-package com.chatsystem.client.util;
+package com.chatsystem.client.util.viewUtil;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,7 +22,7 @@ public class SceneManager {
     }
     public static void switchScene(String fxmlFile, String title) {
         try {
-            Path viewPath = Paths.get(SceneManager.class.getResource("").toURI()).getParent().resolve("view/"+ fxmlFile);
+            Path viewPath = Paths.get(SceneManager.class.getResource("").toURI()).getParent().getParent().resolve("view/"+ fxmlFile);
             Parent root = FXMLLoader.load(viewPath.toUri().toURL());
             primaryStage.setTitle(title);
             primaryStage.setScene(new Scene(root));
