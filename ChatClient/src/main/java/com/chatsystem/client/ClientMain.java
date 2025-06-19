@@ -1,11 +1,11 @@
 package com.chatsystem.client;
 
 
+import com.chatsystem.client.util.viewUtil.SceneManager;
+
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-
-import com.chatsystem.client.util.SceneManager;
 
 public class ClientMain extends Application {
 
