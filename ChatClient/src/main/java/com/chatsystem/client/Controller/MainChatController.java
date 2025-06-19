@@ -1,13 +1,24 @@
 package com.chatsystem.client.Controller;
 
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
-import java.nio.file.Path;
+import java.nio.file.Path; 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.chatsystem.client.Model.Message;
 import com.chatsystem.client.Model.User;
@@ -15,6 +26,9 @@ import com.chatsystem.client.network.Action;
 import com.chatsystem.client.network.ClientSocketManager;
 import com.chatsystem.client.network.Request;
 import com.chatsystem.client.util.Session;
+import com.chatsystem.client.util.viewUtil.ReceivedMessage;
+import com.chatsystem.client.util.viewUtil.SendMessage;
+import com.chatsystem.client.util.viewUtil.MessageView;
 
 public class MainChatController {
 
@@ -27,6 +41,8 @@ public class MainChatController {
     private User selectedUser;
     private ClientSocketManager clientSocketManager;
 
+
+    private Map<String, User> userMap = new HashMap<>();
 
 
     @FXML
@@ -42,6 +58,7 @@ public class MainChatController {
                      Platform.runLater(() -> {
                         if(response.getUsers() != null) {
                             loadContacts(response.getUsers());
+                            setUserMap(response.getUsers());
                             System.out.println("Online users loaded successfully.");
                         } else {
                             showError("No online users found.");
@@ -108,6 +125,13 @@ public class MainChatController {
                 // Set chat icon if available [for now, just a placeholder]
                 }
         });
+
+        // Initialize the chat scroll pane
+        intiChatScrollPane();
+
+        
+        // Add action for Enter key in messageTextField
+        messageTextField.setOnAction(event -> onSendMessage());
     }
 
 
@@ -136,19 +160,71 @@ public class MainChatController {
             System.out.println("No messages found.");
             return;
         }
-        // loop through messages
-        // check the message "sender" and "receiver" to determine how to display it
-        // check the message type (text, image, file, etc.) to display accordingly
+
         for (Message message : messages) {
-            Label msgLabel = new Label(message.getContent());
-            messagesContainer.getChildren().add(msgLabel);
+            messagesContainer.getChildren().add(getMessageView(message));  
         }
         System.out.println("Messages loaded successfully.");
     }
 
+
+    /**
+     * Returns a MessageView based on the message sender.
+     * If the message is sent by the current user, it returns a SendMessage view.
+     * Otherwise, it returns a ReceivedMessage view.
+     *
+     * @param message The message to be displayed.
+     * @return A MessageView instance representing the message.
+     */
+
+    public MessageView getMessageView(Message message) {
+        LocalDateTime dateTime = message.getSentAt().toLocalDateTime();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm a");
+
+        if(message.getSender_id() == Session.currentUser.getUser_id())
+            {
+                return new SendMessage(message.getContent(), getUserById(message.sender_id).getUsername(), dateTime.format(formatter));
+            } else{
+                return new ReceivedMessage(message.getContent(),getUserById(message.sender_id).getUsername(), dateTime.format(formatter));
+            }
+    }
+
+    public void intiChatScrollPane(){
+        // إعداد ScrollPane
+        chatScrollPane.setPannable(true); // تمكين السحب بالماوس
+        chatScrollPane.setCache(true); // تفعيل التخزين المؤقت
+
+        // عند تغيير محتوى الـ ScrollPane
+        messagesContainer.heightProperty().addListener((obs, oldHeight, newHeight) -> {
+            // تأخير التمرير حتى يتم تحديث المشهد
+            Platform.runLater(() -> {
+                chatScrollPane.setVvalue(1.0); // الانتقال إلى الأسفل
+            });
+        });
+
+        // إضافة فلتر للتمرير
+        // لتطبيق تأثير التمرير السلس
+        chatScrollPane.addEventFilter(ScrollEvent.SCROLL, event -> {
+        double deltaY = event.getDeltaY() * 0.008;
+        double newV = chatScrollPane.getVvalue() - deltaY;
+
+        Timeline timeline = new Timeline();
+        KeyValue kv = new KeyValue(chatScrollPane.vvalueProperty(), newV, Interpolator.EASE_BOTH);
+        KeyFrame kf = new KeyFrame(Duration.millis(200), kv);
+        timeline.getKeyFrames().add(kf);
+        timeline.play();
+
+        event.consume();// منع التمرير الافتراضي
+        });
+    }
+
     private void loadMessage(Message message){
-        Label msgLabel = new Label(message.getContent());
-        messagesContainer.getChildren().add(msgLabel);
+        User receiverUser = getUserById(message.getSender_id());
+    if (message != null && receiverUser.getUser_id() == selectedUser.getUser_id()) {
+        messagesContainer.getChildren().add(getMessageView(message));
+        return;
+    }
+    System.out.println("Can not display the received message");
     }
 
     public void setSelectedUser(User user) {
@@ -159,16 +235,15 @@ public class MainChatController {
     @FXML
     private void onSendMessage() {
         String text = messageTextField.getText().trim();
-        if (!text.isEmpty()) {
+        if (!text.isEmpty() && selectedUser != null) {
             Message msg = new Message();
             msg.setContent(text);
             msg.setSender_id(Session.currentUser.getUser_id());
             msg.setReceiver_id(selectedUser.getUser_id());
             msg.setMessage_type(Message.MessageType.TEXT);
+            msg.setSentAt(Timestamp.valueOf(LocalDateTime.now()));
 
-            // عرض الرسالة في الشاشة (مؤقتًا)
-            Label msgLabel = new Label("Me: " + text);
-            messagesContainer.getChildren().add(msgLabel);
+            messagesContainer.getChildren().add(getMessageView(msg));
 
             messageTextField.clear();
 
@@ -189,5 +264,22 @@ public class MainChatController {
         alert.setContentText(message);
         alert.showAndWait();
         // Optionally, switch to another view or update UI
+    }
+
+    /**
+     * Sets the userMap from a list of users. The key is user.getUser_id().
+     */
+    public void setUserMap(List<User> users) {
+        userMap.clear();
+        for (User user : users) {
+            userMap.put(String.valueOf(user.getUser_id()), user);
+        }
+    }
+
+    /**
+     * Returns the User with the given userId from the userMap, or null if not found.
+     */
+    public User getUserById(int userId) {
+        return userMap.get(String.valueOf(userId));
     }
 }
