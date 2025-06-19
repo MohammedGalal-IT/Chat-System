@@ -30,7 +30,7 @@
             <TextField fx:id="emailField" promptText="Email" />
             <PasswordField fx:id="passwordField" promptText="Password" />
 
-            <Button fx:id="loginButton" maxWidth="Infinity" onAction="#handleLogin" style="-fx-background-color:#ad9ce9;" text="Login" textFill="WHITE">
+            <Button fx:id="loginButton" maxWidth="Infinity" onAction="#handleLogin" style="-fx-background-color: #3E2F73;" text="Login" textFill="WHITE">
             <font>
                <Font name="IBM Plex Sans Arabic Regular" size="12.0" />
             </font></Button>
