@@ -26,5 +26,9 @@ module com.chatsystem.client {
     opens com.chatsystem.client.test to javafx.fxml;
     exports com.chatsystem.client.Model to com.google.gson;
     exports com.chatsystem.client.network to com.google.gson;
+    exports com.chatsystem.client.util;
+    opens com.chatsystem.client.util to javafx.fxml;
+    exports com.chatsystem.client.util.viewUtil;
+    opens com.chatsystem.client.util.viewUtil to javafx.fxml;
 
 }
