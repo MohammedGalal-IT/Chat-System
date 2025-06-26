@@ -12,6 +12,9 @@ public class User {
     public String profile_picture;
     public Timestamp createdAt;
 
+    public User(){
+
+    }
     public User(int user_id, String username, String email, String password_hash, boolean isOnline, String profile_picture, Timestamp createdAt) {
         this.user_id = user_id;
         this.username = username;

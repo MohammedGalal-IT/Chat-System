@@ -4,8 +4,8 @@ import com.chatsystem.server.Controller.AuthController;
 import com.chatsystem.server.Controller.UserController;
 import com.chatsystem.server.Model.User;
 import com.chatsystem.server.Model.Message.MessageType;
+import com.chatsystem.server.services.FileService;
 import com.chatsystem.server.services.MessageService;
-import com.chatsystem.server.services.UserService;
 import com.chatsystem.server.Controller.MessageController;
 import com.chatsystem.server.Controller.FileController;
 import com.google.gson.Gson;
@@ -13,7 +13,6 @@ import com.google.gson.JsonSyntaxException;
 
 import java.io.*;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -26,7 +25,7 @@ public class ClientHandler implements Runnable {
     private final UserController userController;
     private final MessageController messageController;
     private final FileController fileController;
-    private byte[] data;
+//    private byte[] data;
     private volatile boolean running = true;
     private static final Map<String, ClientHandler> onlineUsers = new ConcurrentHashMap<>();
     private String userKey = null; // user_id as key for online users
@@ -39,7 +38,7 @@ public class ClientHandler implements Runnable {
         this.userController = new UserController();
         this.messageController = new MessageController();
         this.fileController = new FileController();
-        this.data = null;
+//        this.data = null;
     }
 
     @Override
@@ -62,6 +61,7 @@ public class ClientHandler implements Runnable {
                         }
                         String responseJson = gson.toJson(response);
                         writer.println(responseJson); // Send response back to client
+                        System.out.println("Sent a Response to: " + clientSocket.getInetAddress().getHostName() + ", Response: " + response.getAction());
                         if(response.getAction() == Action.LOGIN){
                             broadcastToOnlineUsers(new Response(true, "new user is online", Action.REFRESH));
                         }
@@ -85,18 +85,31 @@ public class ClientHandler implements Runnable {
 
                     } else{
                         response = handleRequestWithAttachment(request);
+                        if(response == null) System.out.println("response is null");
+                        if(response.getAction() == null) {
+                            response = new Response(false, "Failed to process request", request.getAction());
+                            System.out.println("The Response Action is null ");
+                        }
+                        response.setAction(Action.RETURN);
                         String responseJson = gson.toJson(response);
                         writer.println(responseJson); // Send response back to client
+                        System.out.println("Sent a Response to: " + clientSocket.getInetAddress().getHostName() + ", Response: " + response.getAction());
 
-                        String receiverKey = String.valueOf(response.getMessageObj().getReceiver_id());
-                        ClientHandler receiverHandler = getOnlineUser(receiverKey);
-                            if(receiverHandler != null && receiverHandler.running){
-                                receiverHandler.writer.println(responseJson);
-                                 // send file data to the receiver client if it's online
-                                 OutputStream out = clientSocket.getOutputStream();
-                                 out.write(data);
-                                 out.flush();
-                            }
+                         if(!response.isSuccess()) continue;
+                         String receiverKey = String.valueOf(response.getMessageObj().getReceiver_id());
+                         ClientHandler receiverHandler = getOnlineUser(receiverKey);
+                             if(receiverHandler != null && receiverHandler.running){
+                                 // update message to be read
+                                 response.getMessageObj().setIs_read(true);
+                                 new MessageService().updateMessage(response.getMessageObj());
+
+                                 response.setAction(Action.RECEIVE_MESSAGE);
+
+                                 responseJson = gson.toJson(response);
+                                 receiverHandler.writer.println(responseJson);
+                                  // send file data to the receiver client if it's online
+                                 receiverHandler.writer.println(new FileService().getFile(response.getMessageObj().file_path_server));
+                             }
                         }
                 }
                 catch (JsonSyntaxException e) {
@@ -108,7 +121,7 @@ public class ClientHandler implements Runnable {
                     handleRequest(new Request(Action.LOGOUT, null, new User(Integer.parseInt(userKey), null, null, null, running, null, null), null));
                     close();
                 } catch (Exception e) {
-//                    e.printStackTrace();
+                    e.printStackTrace();
                     System.out.println(e.getMessage());
                     close();
                 }
@@ -144,6 +157,7 @@ public class ClientHandler implements Runnable {
             case REGISTER:
                 return authController.register(request);
             case SEND_MESSAGE:
+            case SEND_MESSAGE_WITH_ATTACHMENT:
             case GET_MESSAGES_BETWEEN_USERS:
             case GET_UNREAD_MESSAGES:
             case MARK_MESSAGES_AS_READ:
@@ -175,14 +189,18 @@ public class ClientHandler implements Runnable {
                 
                 Response response =  handleRequest(request);
                 if (response != null && response.isSuccess() && response.getMessageObj() != null && response.getMessageObj().getMessage_type() != MessageType.TEXT) {
-                    data = fileController.getFile(response);
+//                    data = fileController.getFile(response);
                     return response;
                 }
             }
+            return new Response(false, "File handling failed", Action.SEND_MESSAGE_WITH_ATTACHMENT);
         } catch (IOException e){
             System.out.println(e.getMessage());
 //            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
+        System.out.println("File handling failed");
         return new Response(false, "File handling failed", Action.SEND_MESSAGE_WITH_ATTACHMENT);
     }
 
@@ -221,9 +239,9 @@ public class ClientHandler implements Runnable {
         return running;
     }
 
-    public byte[] getData() {
-        return data;
-    }
+//    public byte[] getData() {
+//        return data;
+//    }
 
     public FileController getFileController() {
         return fileController;
