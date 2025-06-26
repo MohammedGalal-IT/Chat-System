@@ -1,13 +1,17 @@
 package com.chatsystem.server.services;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.UUID;
 
 import com.chatsystem.server.Model.Message.MessageType;
@@ -15,7 +19,7 @@ import com.chatsystem.server.Model.Message.FileFormat;;
 
 public class FileService {
 
-    private static final String UPLOADS_DIR = "ChatServer/uploads";  // changed to "uploads" when separate the server 
+    private static final String UPLOADS_DIR = "uploads";  // changed to "uploads" when separate the server 
 
     public FileService() {
         File uploads = new File(UPLOADS_DIR);
@@ -49,18 +53,29 @@ public class FileService {
         long totalBytes = 0;
         long remaining = fileLength;
         try (FileOutputStream out = new FileOutputStream(filePath.toFile())) {
-            byte[] buffer = new byte[8192];
-            int bytesRead;
-            while (remaining > 0 && (bytesRead = fileContent.read(buffer, 0, (int)Math.min(buffer.length, remaining))) != -1) {
-                out.write(buffer, 0, bytesRead);
-                totalBytes += bytesRead;
-                remaining -= bytesRead;
-            }
+            // byte[] buffer = new byte[8192];
+            // int bytesRead;
+            // while (remaining > 0 && (bytesRead = fileContent.read(buffer, 0, (int)Math.min(buffer.length, remaining))) != -1) {
+            //     out.write(buffer, 0, bytesRead);
+            //     totalBytes += bytesRead;
+            //     remaining -= bytesRead;
+            //     System.out.println("write: " + bytesRead);
+            // }
+            // byte[] data = new byte[(int)fileLength];
+            // dis.readFully(data);
+            // out.write(data);
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(fileContent));
+            String line = reader .readLine();
+            byte[] bytes = Base64.getDecoder().decode(line);
+            out.write(bytes);
+            System.out.println("File Saved");
         }
-        // Validate written bytes match expected fileLength
-        if (totalBytes != fileLength) {
-            throw new IOException("File length mismatch: expected " + fileLength + ", but wrote " + totalBytes);
-        }
+//        // Validate written bytes match expected fileLength
+//        if (totalBytes != fileLength) {
+//            System.out.println("File length mismatch: expected " + fileLength + ", but wrote " + totalBytes);
+//        }
+        
         return filePath.toString();
     }
 
@@ -121,6 +136,12 @@ public class FileService {
     public void getFile(String fileUrl, OutputStream out) throws IOException{
         out.write(readFile(fileUrl));
         out.flush();
+    }
+
+    public String getFile(String fileUrl) throws IOException{
+        Path filePath = Paths.get(fileUrl);
+        byte[] data = Files.readAllBytes(filePath);
+        return Base64.getEncoder().encodeToString(data);
     }
 
     public  void writeFile(byte[] bytes, String fileUrl) throws IOException {
