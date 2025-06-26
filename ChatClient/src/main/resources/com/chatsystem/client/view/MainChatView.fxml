@@ -211,7 +211,100 @@
                               </children>
                            </HBox>
                         </children>
+                        <VBox.margin>
+                           <Insets right="100.0" />
+                        </VBox.margin>
                      </VBox>
+                     <HBox fx:id="sendMessage_image" prefHeight="388.0" prefWidth="697.0">
+                        <VBox.margin>
+                           <Insets right="100.0" />
+                        </VBox.margin>
+                        <children>
+                           <VBox alignment="CENTER_LEFT" prefHeight="388.0" prefWidth="246.0" style="-fx-background-color: #d7c8e3; -fx-background-radius: 10; -fx-alignment: right; -fx-padding: 15 15 10 15; -fx-spacing: 10;">
+                              <children>
+                                 <ImageView fitHeight="300.0" fitWidth="635.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                       <Image url="@../../../../../../../../../../../../Downloads/chat.png" />
+                                    </image>
+                                 </ImageView>
+                                 <TextFlow prefHeight="192.0" prefWidth="484.0">
+                                    <children>
+                                       <Text fx:id="sendMessage_text2" strokeType="OUTSIDE" strokeWidth="0.0" text="Hello, Please Select a User to caht">
+                                          <font>
+                                             <Font name="Cairo Regular" size="12.0" />
+                                          </font>
+                                       </Text>
+                                    </children>
+                                 </TextFlow>
+                                 <HBox prefHeight="18.0" prefWidth="418.0" style="-fx-spacing: 10; -fx-background-color: #f3ebfa; -fx-padding: 2 10; -fx-background-radius: 20;" VBox.vgrow="ALWAYS">
+                                    <children>
+                                       <Label fx:id="sendMessage_user2" prefHeight="14.0" prefWidth="154.0" text="Mohammed Galal">
+                                          <font>
+                                             <Font size="9.0" />
+                                          </font>
+                                       </Label>
+                                       <Region prefHeight="14.0" prefWidth="112.0" HBox.hgrow="ALWAYS" />
+                                       <HBox alignment="CENTER_RIGHT" prefHeight="14.0" prefWidth="140.0" style="-fx-background-radius: 20;">
+                                          <children>
+                                             <Label fx:id="sendMessage_date2" alignment="CENTER_RIGHT" prefHeight="14.0" prefWidth="142.0" text="2025-5-12:12:55">
+                                                <font>
+                                                   <Font size="9.0" />
+                                                </font>
+                                             </Label>
+                                          </children>
+                                       </HBox>
+                                    </children>
+                                 </HBox>
+                              </children>
+                           </VBox>
+                           <Region prefHeight="388.0" prefWidth="18.0" HBox.hgrow="ALWAYS" />
+                        </children>
+                     </HBox>
+                     <HBox fx:id="receiveMessage_image" prefHeight="388.0" prefWidth="697.0">
+                        <children>
+                           <Region prefHeight="388.0" prefWidth="18.0" HBox.hgrow="ALWAYS" />
+                           <VBox alignment="CENTER_LEFT" prefHeight="388.0" prefWidth="246.0" style="-fx-background-color: #e5f280; -fx-background-radius: 10; -fx-alignment: right; -fx-padding: 15 15 10 15; -fx-spacing: 10;">
+                              <children>
+                                 <ImageView fitHeight="300.0" fitWidth="635.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                       <Image url="@../../../../../../../../../../../../Downloads/chat.png" />
+                                    </image>
+                                 </ImageView>
+                                 <TextFlow prefHeight="192.0" prefWidth="484.0">
+                                    <children>
+                                       <Text fx:id="sendMessage_text21" strokeType="OUTSIDE" strokeWidth="0.0" text="Hello, Please Select a User to caht">
+                                          <font>
+                                             <Font name="Cairo Regular" size="12.0" />
+                                          </font>
+                                       </Text>
+                                    </children>
+                                 </TextFlow>
+                                 <HBox prefHeight="18.0" prefWidth="418.0" style="-fx-spacing: 10; -fx-background-color: #f0faa7; -fx-padding: 2 10; -fx-background-radius: 20;" VBox.vgrow="ALWAYS">
+                                    <children>
+                                       <Label fx:id="sendMessage_user21" prefHeight="14.0" prefWidth="154.0" text="Mohammed Galal">
+                                          <font>
+                                             <Font size="9.0" />
+                                          </font>
+                                       </Label>
+                                       <Region prefHeight="14.0" prefWidth="112.0" HBox.hgrow="ALWAYS" />
+                                       <HBox alignment="CENTER_RIGHT" prefHeight="14.0" prefWidth="140.0" style="-fx-background-radius: 20;">
+                                          <children>
+                                             <Label fx:id="sendMessage_date21" alignment="CENTER_RIGHT" prefHeight="14.0" prefWidth="142.0" text="2025-5-12:12:55">
+                                                <font>
+                                                   <Font size="9.0" />
+                                                </font>
+                                             </Label>
+                                          </children>
+                                       </HBox>
+                                    </children>
+                                 </HBox>
+                              </children>
+                           </VBox>
+                        </children>
+                        <VBox.margin>
+                           <Insets left="100.0" />
+                        </VBox.margin>
+                     </HBox>
                   </children></VBox>
             </content>
          </ScrollPane>
@@ -229,7 +322,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Button fx:id="insertButton" onAction="#onSendMessage" prefHeight="42.0" prefWidth="40.0" style="-fx-background-color: #5743a3; -fx-background-radius: 50;" textFill="WHITE">
+            <Button fx:id="insertButton" onAction="#onSendMessageFile" prefHeight="42.0" prefWidth="40.0" style="-fx-background-color: #5743a3; -fx-background-radius: 50;" textFill="WHITE">
                <font>
                   <Font name="Cairo Black" size="12.0" />
                </font>
