@@ -7,11 +7,15 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.util.Duration;
 
+import java.io.File;
+import java.net.URI;
 import java.nio.file.Path; 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -27,8 +31,13 @@ import com.chatsystem.client.network.ClientSocketManager;
 import com.chatsystem.client.network.Request;
 import com.chatsystem.client.util.Session;
 import com.chatsystem.client.util.viewUtil.ReceivedMessage;
+import com.chatsystem.client.util.viewUtil.SendImageMessage;
 import com.chatsystem.client.util.viewUtil.SendMessage;
+import com.chatsystem.client.util.viewUtil.SmoothishScrollpaneUtil;
+import com.chatsystem.client.util.viewUtil.ImageMessageView;
 import com.chatsystem.client.util.viewUtil.MessageView;
+import com.chatsystem.client.util.viewUtil.ReceivedImageMessage;
+import com.chatsystem.client.util.collectionsUtil.Pair;
 
 public class MainChatController {
 
@@ -48,8 +57,8 @@ public class MainChatController {
     @FXML
     public void initialize() {
         clientSocketManager = ClientSocketManager.getInstance();
-        clientSocketManager.setOnResponse((response, fileData) -> {
-            if(response != null) System.out.println("Request Received");
+        clientSocketManager.setOnResponse((response) -> {
+            if(response != null) System.out.println("Response Received");
 
             switch(response.getAction()) {
 
@@ -86,7 +95,7 @@ public class MainChatController {
 
                     case Action.RECEIVE_MESSAGE:
                     System.out.println("received a message: " + response.getMessage());
-                    Platform.runLater(() -> loadMessage(response.getMessageObj()));
+                    Platform.runLater(() -> messageLoader(response.getMessageObj()));
                     break;
 
                 default:
@@ -189,6 +198,18 @@ public class MainChatController {
             }
     }
 
+    public ImageMessageView getImageMessageView(Message message) {
+        LocalDateTime dateTime = message.getSentAt().toLocalDateTime();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm a");
+
+        if(message.getSender_id() == Session.currentUser.getUser_id())
+            {
+                return new SendImageMessage(message.getContent(), getUserById(message.sender_id).getUsername(), dateTime.format(formatter), message.getFile_path_client());
+            } else{
+                return new ReceivedImageMessage(message.getContent(),getUserById(message.sender_id).getUsername(), dateTime.format(formatter), message.getFile_path_client());
+            }
+    }
+
     public void intiChatScrollPane(){
         // إعداد ScrollPane
         chatScrollPane.setPannable(true); // تمكين السحب بالماوس
@@ -202,26 +223,33 @@ public class MainChatController {
             });
         });
 
-        // إضافة فلتر للتمرير
-        // لتطبيق تأثير التمرير السلس
-        chatScrollPane.addEventFilter(ScrollEvent.SCROLL, event -> {
-        double deltaY = event.getDeltaY() * 0.008;
-        double newV = chatScrollPane.getVvalue() - deltaY;
+        new SmoothishScrollpaneUtil().init(chatScrollPane, messagesContainer);
+    }
 
-        Timeline timeline = new Timeline();
-        KeyValue kv = new KeyValue(chatScrollPane.vvalueProperty(), newV, Interpolator.EASE_BOTH);
-        KeyFrame kf = new KeyFrame(Duration.millis(200), kv);
-        timeline.getKeyFrames().add(kf);
-        timeline.play();
-
-        event.consume();// منع التمرير الافتراضي
-        });
+    private void messageLoader(Message message){
+        switch (message.getMessage_type()) {
+            case IMAGE:
+                loadImageMessage(message);
+                break;
+        
+            default:
+                loadMessage(message);
+        }
     }
 
     private void loadMessage(Message message){
         User receiverUser = getUserById(message.getSender_id());
     if (message != null && receiverUser.getUser_id() == selectedUser.getUser_id()) {
         messagesContainer.getChildren().add(getMessageView(message));
+        return;
+    }
+    System.out.println("Can not display the received message");
+    }
+
+    private void loadImageMessage(Message message){
+        User receiverUser = getUserById(message.getSender_id());
+    if (message != null && receiverUser.getUser_id() == selectedUser.getUser_id()) {
+        messagesContainer.getChildren().add(getImageMessageView(message));
         return;
     }
     System.out.println("Can not display the received message");
@@ -249,6 +277,91 @@ public class MainChatController {
 
             clientSocketManager.sendRequest(new Request(Action.SEND_MESSAGE, null, Session.currentUser, msg));
         }
+    }
+
+    /**
+     * Detects the message type and file format based on the file name.
+     * @param fileName the name of the file to analyze
+     * @return a Pair containing the detected MessageType and FileFormat, or nulls if unsupported
+     */
+    private Pair<Message.MessageType, Message.FileFormat> detectMessageTypeAndFormat(String fileName) {
+        fileName = fileName.toLowerCase();
+        Message.MessageType type = null;
+        Message.FileFormat format = null;
+        if (fileName.endsWith(".jpg") || fileName.endsWith(".jpeg") || fileName.endsWith(".png")) {
+            type = Message.MessageType.IMAGE;
+            format = fileName.endsWith(".png") ? Message.FileFormat.png : Message.FileFormat.jpg;
+        } else if (fileName.endsWith(".mp4")) {
+            type = Message.MessageType.VIDEO;
+            format = Message.FileFormat.mp4;
+        } else if (fileName.endsWith(".mp3")) {
+            type = Message.MessageType.AUDIO;
+            format = Message.FileFormat.mp3;
+        } else if (fileName.endsWith(".pdf")) {
+            type = Message.MessageType.FILE;
+            format = Message.FileFormat.pdf;
+        } else if (fileName.endsWith(".docx")) {
+            type = Message.MessageType.FILE;
+            format = Message.FileFormat.docx;
+        } else if (fileName.endsWith(".xlsx")) {
+            type = Message.MessageType.FILE;
+            format = Message.FileFormat.xlsx;
+        } else if (fileName.endsWith(".zip")) {
+            type = Message.MessageType.FILE;
+            format = Message.FileFormat.zip;
+        } else if (fileName.endsWith(".rar")) {
+            type = Message.MessageType.FILE;
+            format = Message.FileFormat.rar;
+        } else if (fileName.endsWith(".txt")) {
+            type = Message.MessageType.FILE;
+            format = Message.FileFormat.txt;
+        }
+        return new Pair<>(type, format);
+    }
+
+    @FXML
+    private void onSendMessageFile() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select File to Send");
+        File file = fileChooser.showOpenDialog(messagesContainer.getScene().getWindow());
+        if (file == null || selectedUser == null) return;
+
+        Pair<Message.MessageType, Message.FileFormat> typeAndFormat = detectMessageTypeAndFormat(file.getName());
+        if (typeAndFormat.first() == null || typeAndFormat.second() == null) {
+            showError("Unsupported file type.");
+            return;
+        }
+
+        Message msg = new Message();
+
+        try {
+            msg.setSender_id(Session.currentUser.getUser_id());
+            msg.setReceiver_id(selectedUser.getUser_id());
+            msg.setMessage_type(typeAndFormat.first());
+            msg.setFile_format(typeAndFormat.second());
+            msg.setFile_length(file.length());
+            String text = messageTextField.getText().trim();
+            if (!text.isEmpty() && selectedUser != null) msg.setContent(text); else msg.setContent("Sent a file: " + file.getName());
+            msg.setFile_path_client(file.getAbsolutePath());
+            msg.setSentAt(Timestamp.valueOf(LocalDateTime.now()));
+
+        } catch (Exception e) {
+            System.out.println("Error at onSendMessageFile method: " + e.getMessage());
+        }
+        
+        switch (msg.getMessage_type()) {
+            case IMAGE:
+                messagesContainer.getChildren().add(getImageMessageView(msg));
+                break;
+        
+            default:
+                messagesContainer.getChildren().add(getMessageView(msg));
+                break;
+        }
+
+        messageTextField.clear();
+
+        clientSocketManager.sendRequest(new Request(Action.SEND_MESSAGE_WITH_ATTACHMENT, null, Session.currentUser, msg));
     }
 
     void showError(String message) {

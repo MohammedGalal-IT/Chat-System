@@ -30,7 +30,7 @@ public class LoginController {
     @FXML
     public void initialize() {
         clientSocketManager = ClientSocketManager.getInstance();
-        clientSocketManager.setOnResponse((response, fileData) -> {
+        clientSocketManager.setOnResponse((response) -> {
             if (response.getAction() == Action.LOGIN) {
                 if (response.isSuccess()) {
                     Platform.runLater(() -> {

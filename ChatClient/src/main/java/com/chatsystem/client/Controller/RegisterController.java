@@ -30,7 +30,7 @@ public class RegisterController {
     @FXML
     public void initialize() {
         clientSocketManager = ClientSocketManager.getInstance();
-        clientSocketManager.setOnResponse((response, fileData) -> {
+        clientSocketManager.setOnResponse((response) -> {
             if(response != null) System.out.println("Request Received");
             if (response.getAction() == Action.REGISTER) {
                 if (response.isSuccess()) {
