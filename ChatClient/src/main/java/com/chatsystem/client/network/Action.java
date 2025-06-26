@@ -5,6 +5,7 @@ public enum Action{
     REGISTER,
     LOGOUT,
     REFRESH,
+    RETURN,
 
     GET_USER_BY_ID,
     GET_USER_BY_EMAIL,
