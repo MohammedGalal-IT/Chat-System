@@ -14,16 +14,12 @@ public class AuthController {
     }
 
     public Response executeRequest(Request request) {
-        switch (request.getAction()) {
-            case LOGIN:
-                return login(request);
-            case REGISTER:
-                return register(request);
-            case LOGOUT:
-                return logout(request);
-            default:
-                return new Response(false, "Invalid action", null);
-        }
+        return switch (request.getAction()) {
+            case LOGIN -> login(request);
+            case REGISTER -> register(request);
+            case LOGOUT -> logout(request);
+            default -> new Response(false, "Invalid action", null);
+        };
     }
 
     // تسجيل الدخول

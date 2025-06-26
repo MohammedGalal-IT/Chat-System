@@ -20,6 +20,7 @@ public class FileController {
 
     public Request saveFile(Request request, InputStream in) throws IOException{
         if(request.getMessage().getMessage_type() == MessageType.TEXT || in == null){
+            System.out.println("Error at FileController line 23");
             return null;
         }
         // check file format
@@ -35,8 +36,9 @@ public class FileController {
             case zip:
             case xlsx:
                 break;
-        
+
             default:
+                System.out.println("Error at FileController line 41");
                 return null;
         }
         // generate file name
@@ -44,10 +46,12 @@ public class FileController {
         // save file to uploads
         String path = fileService.saveFile(request.getMessage().getMessage_type(), fileName, in, request.getMessage().getFile_length());
         if(path == null){
+            System.out.println("Error at FileController line 49");
             return null;
         }
         // put the path in the request
         request.getMessage().setFile_path_server(path);
+        System.out.println("Request Prepared with server file path");
         return request;
     }
 

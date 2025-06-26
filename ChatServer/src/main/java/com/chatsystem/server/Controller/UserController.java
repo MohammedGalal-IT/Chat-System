@@ -15,26 +15,17 @@ public class UserController {
     }
 
     public Response executeRequest(Request request) {
-        switch (request.getAction()) {
-            case GET_USER_BY_ID:
-                return getUserById(request);
-            case GET_USER_BY_EMAIL:
-                return getUserByEmail(request);
-            case UPDATE_USER:
-                return updateUser(request);
-            case UPDATE_USER_PROFILE_PICTURE:
-                return updateProfilePicture(request);
-            case CHANGE_PASSWORD:
-                return changePassword(request);
-            case SEARCH_USERS:
-                return searchUsers(request);
-            case GET_USERS:
-                return getAllUsers(request);
-            case GET_ONLINE_USERS:
-                return getOnlineUsers(request);
-            default:
-                return new Response(false, "Invalid Action", request.getAction());
-        }
+        return switch (request.getAction()) {
+            case GET_USER_BY_ID -> getUserById(request);
+            case GET_USER_BY_EMAIL -> getUserByEmail(request);
+            case UPDATE_USER -> updateUser(request);
+            case UPDATE_USER_PROFILE_PICTURE -> updateProfilePicture(request);
+            case CHANGE_PASSWORD -> changePassword(request);
+            case SEARCH_USERS -> searchUsers(request);
+            case GET_USERS -> getAllUsers(request);
+            case GET_ONLINE_USERS -> getOnlineUsers(request);
+            default -> new Response(false, "Invalid Action", request.getAction());
+        };
     }
 
     // Get user by ID

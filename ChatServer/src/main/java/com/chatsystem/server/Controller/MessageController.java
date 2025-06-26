@@ -67,14 +67,10 @@ public class MessageController {
             return new Response(false, "Message type is not file", Action.SEND_MESSAGE_WITH_ATTACHMENT);
             }
         Message message = request.getMessage();
-        Response response = new Response();
-        response.setMessageObj(message);
         message = messageService.sendMessage(message);
         if (message != null) {
-            response.setSuccess(true);
-            response.setMessage("Message sent");
-            response.setMessageObj(message);
-            request.setAction(request.getAction());
+            Response response = new Response(true, "Message with Attachment sent", Action.SEND_MESSAGE);
+            response.setMessageObj(message);;
             return response;
         } else {
             return new Response(false, "Failed to send message", Action.SEND_MESSAGE_WITH_ATTACHMENT);
