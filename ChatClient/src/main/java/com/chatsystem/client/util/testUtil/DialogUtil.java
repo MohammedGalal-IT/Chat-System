@@ -1,7 +1,5 @@
 package com.chatsystem.client.util.testUtil;
 
-import java.lang.classfile.Label;
-
 import javafx.animation.FadeTransition;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;

@@ -1,7 +1,6 @@
 package com.chatsystem.server.tests.services;
 
 import com.chatsystem.server.services.MessageService;
-import com.chatsystem.server.tests.util.MessageVisualizer;
 import com.chatsystem.server.Model.Message;
 import com.chatsystem.server.Model.Message.MessageType;
 import com.chatsystem.server.Model.Message.FileFormat;
