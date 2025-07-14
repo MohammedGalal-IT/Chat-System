@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -12,6 +13,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
@@ -304,6 +306,87 @@
                         <VBox.margin>
                            <Insets left="100.0" />
                         </VBox.margin>
+                     </HBox>
+                     <HBox fx:id="receiveMessage_image1" prefHeight="388.0" prefWidth="697.0">
+                        <children>
+                           <Region prefHeight="388.0" prefWidth="18.0" HBox.hgrow="ALWAYS" />
+                           <VBox alignment="CENTER_LEFT" prefHeight="388.0" prefWidth="246.0" style="-fx-background-color: #e5f280; -fx-background-radius: 10; -fx-alignment: right; -fx-padding: 15 15 10 15; -fx-spacing: 10;">
+                              <children>
+                                 <MediaView fitHeight="200.0" fitWidth="200.0" />
+                                 <TextFlow prefHeight="192.0" prefWidth="484.0">
+                                    <children>
+                                       <Text fx:id="sendMessage_text211" strokeType="OUTSIDE" strokeWidth="0.0" text="Hello, Please Select a User to caht">
+                                          <font>
+                                             <Font name="Cairo Regular" size="12.0" />
+                                          </font>
+                                       </Text>
+                                    </children>
+                                 </TextFlow>
+                                 <HBox prefHeight="18.0" prefWidth="418.0" style="-fx-spacing: 10; -fx-background-color: #f0faa7; -fx-padding: 2 10; -fx-background-radius: 20;" VBox.vgrow="ALWAYS">
+                                    <children>
+                                       <Label fx:id="sendMessage_user211" prefHeight="14.0" prefWidth="154.0" text="Mohammed Galal">
+                                          <font>
+                                             <Font size="9.0" />
+                                          </font>
+                                       </Label>
+                                       <Region prefHeight="14.0" prefWidth="112.0" HBox.hgrow="ALWAYS" />
+                                       <HBox alignment="CENTER_RIGHT" prefHeight="14.0" prefWidth="140.0" style="-fx-background-radius: 20;">
+                                          <children>
+                                             <Label fx:id="sendMessage_date211" alignment="CENTER_RIGHT" prefHeight="14.0" prefWidth="142.0" text="2025-5-12:12:55">
+                                                <font>
+                                                   <Font size="9.0" />
+                                                </font>
+                                             </Label>
+                                          </children>
+                                       </HBox>
+                                    </children>
+                                 </HBox>
+                              </children>
+                           </VBox>
+                        </children>
+                     </HBox>
+                     <HBox fx:id="sendMessage_image1" prefHeight="388.0" prefWidth="697.0">
+                        <children>
+                           <VBox alignment="CENTER_LEFT" prefHeight="114.0" prefWidth="406.0" style="-fx-background-color: #d7c8e3; -fx-background-radius: 10; -fx-alignment: right; -fx-padding: 15 15 10 15; -fx-spacing: 10;">
+                              <children>
+                                 <HBox fx:id="audio_meesage" prefHeight="100.0" prefWidth="200.0" style="-fx-spacing: 10; -fx-alignment: CENTER_LEFT; -fx-background-color: #f3ebfa; -fx-background-radius: 8; -fx-padding: 3 10 3 10;">
+                                    <children>
+                                       <Button mnemonicParsing="false" style="-fx-background-radius: 20;" text="▶" />
+                                       <Slider prefHeight="14.0" prefWidth="337.0" />
+                                    </children>
+                                 </HBox>
+                                 <TextFlow prefHeight="192.0" prefWidth="484.0">
+                                    <children>
+                                       <Text fx:id="sendMessage_text22" strokeType="OUTSIDE" strokeWidth="0.0" text="Hello, Please Select a User to caht">
+                                          <font>
+                                             <Font name="Cairo Regular" size="12.0" />
+                                          </font>
+                                       </Text>
+                                    </children>
+                                 </TextFlow>
+                                 <HBox prefHeight="18.0" prefWidth="418.0" style="-fx-spacing: 10; -fx-background-color: #f3ebfa; -fx-padding: 2 10; -fx-background-radius: 20;" VBox.vgrow="ALWAYS">
+                                    <children>
+                                       <Label fx:id="sendMessage_user22" prefHeight="14.0" prefWidth="154.0" text="Mohammed Galal">
+                                          <font>
+                                             <Font size="9.0" />
+                                          </font>
+                                       </Label>
+                                       <Region prefHeight="14.0" prefWidth="112.0" HBox.hgrow="ALWAYS" />
+                                       <HBox alignment="CENTER_RIGHT" prefHeight="14.0" prefWidth="140.0" style="-fx-background-radius: 20;">
+                                          <children>
+                                             <Label fx:id="sendMessage_date22" alignment="CENTER_RIGHT" prefHeight="14.0" prefWidth="142.0" text="2025-5-12:12:55">
+                                                <font>
+                                                   <Font size="9.0" />
+                                                </font>
+                                             </Label>
+                                          </children>
+                                       </HBox>
+                                    </children>
+                                 </HBox>
+                              </children>
+                           </VBox>
+                           <Region prefHeight="388.0" prefWidth="18.0" HBox.hgrow="ALWAYS" />
+                        </children>
                      </HBox>
                   </children></VBox>
             </content>

@@ -18,88 +18,88 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>22.0.2 </version>
+            <version>22.0.2</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>22.0.2 </version>
+            <version>22.0.2</version>
         </dependency>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-web</artifactId>
-            <version>22.0.2 </version>
-        </dependency>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-swing</artifactId>
-            <version>22.0.2 </version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.openjfx</groupId>-->
+<!--            <artifactId>javafx-web</artifactId>-->
+<!--            <version>22.0.2</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.openjfx</groupId>-->
+<!--            <artifactId>javafx-swing</artifactId>-->
+<!--            <version>22.0.2</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-media</artifactId>
-            <version>22.0.2 </version>
+            <version>22.0.2</version>
         </dependency>
         <dependency>
             <groupId>org.controlsfx</groupId>
             <artifactId>controlsfx</artifactId>
             <version>11.2.1</version>
         </dependency>
-        <dependency>
-            <groupId>com.dlsc.formsfx</groupId>
-            <artifactId>formsfx-core</artifactId>
-            <version>11.6.0</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.openjfx</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>net.synedra</groupId>
-            <artifactId>validatorfx</artifactId>
-            <version>0.5.0</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.openjfx</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.kordamp.ikonli</groupId>
-            <artifactId>ikonli-javafx</artifactId>
-            <version>12.3.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.kordamp.bootstrapfx</groupId>
-            <artifactId>bootstrapfx-core</artifactId>
-            <version>0.4.0</version>
-        </dependency>
-        <dependency>
-            <groupId>eu.hansolo</groupId>
-            <artifactId>tilesfx</artifactId>
-            <version>21.0.3</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.openjfx</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.dlsc.formsfx</groupId>-->
+<!--            <artifactId>formsfx-core</artifactId>-->
+<!--            <version>11.6.0</version>-->
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <groupId>org.openjfx</groupId>-->
+<!--                    <artifactId>*</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>net.synedra</groupId>-->
+<!--            <artifactId>validatorfx</artifactId>-->
+<!--            <version>0.5.0</version>-->
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <groupId>org.openjfx</groupId>-->
+<!--                    <artifactId>*</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.kordamp.ikonli</groupId>-->
+<!--            <artifactId>ikonli-javafx</artifactId>-->
+<!--            <version>12.3.1</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.kordamp.bootstrapfx</groupId>-->
+<!--            <artifactId>bootstrapfx-core</artifactId>-->
+<!--            <version>0.4.0</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>eu.hansolo</groupId>-->
+<!--            <artifactId>tilesfx</artifactId>-->
+<!--            <version>21.0.3</version>-->
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <groupId>org.openjfx</groupId>-->
+<!--                    <artifactId>*</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.junit.jupiter</groupId>-->
+<!--            <artifactId>junit-jupiter-api</artifactId>-->
+<!--            <version>${junit.version}</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.junit.jupiter</groupId>-->
+<!--            <artifactId>junit-jupiter-engine</artifactId>-->
+<!--            <version>${junit.version}</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>mysql</groupId>
@@ -118,18 +118,47 @@
             <artifactId>FXAlert</artifactId>
             <version>3.1.0</version>
         </dependency>
-        
-        <dependency>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-jar-plugin</artifactId>
-            <version>3.4.2</version>
-            <type>maven-plugin</type>
-        </dependency>
 
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+            <directory>src/main/resources</directory>
+            <includes>
+                <include>**/*.fxml</include>
+                <include>**/*.css</include>
+                <include>**/*.png</include>
+                <include>**/*.jpg</include>
+            </includes>
+            </resource>
+        </resources>
+
+
         <plugins>
+<!--            &lt;!&ndash; JLink plugin for custom Java runtime image &ndash;&gt;-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-jlink-plugin</artifactId>-->
+<!--                <version>3.1.0</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>create-runtime-image</id>-->
+<!--                        <goals>-->
+<!--                            <goal>jlink</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--                <configuration>-->
+<!--                    <outputDirectory>${project.build.directory}/runtime-image</outputDirectory>-->
+<!--                    <addModules>ALL-MODULE-PATH</addModules>-->
+<!--                    <launcher name="ChatClient" module="com.chatsystem.client/com.chatsystem.client.ClientMain"/>-->
+<!--                    <compress>2</compress>-->
+<!--                    <stripDebug>true</stripDebug>-->
+<!--                    <noHeaderFiles>true</noHeaderFiles>-->
+<!--                    <noManPages>true</noManPages>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
         
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -160,6 +189,7 @@
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -184,6 +214,78 @@
                     </execution>
                 </executions>
             </plugin>
+
+<!--            <plugin>-->
+<!--            <groupId>org.panteleyev</groupId>-->
+<!--            <artifactId>jpackage-maven-plugin</artifactId>-->
+<!--            <version>1.5.0</version>-->
+<!--            <executions>-->
+<!--                <execution>-->
+<!--                    <goals>-->
+<!--                        <goal>jpackage</goal>-->
+<!--                    </goals>-->
+<!--                </execution>-->
+<!--            </executions>-->
+<!--            <configuration>-->
+<!--                &lt;!&ndash; اسم التطبيق &ndash;&gt;-->
+<!--                <name>ChatClient</name>-->
+<!--                &lt;!&ndash; المسار النسبي لملف الـ JAR النهائي &ndash;&gt;-->
+<!--                <input>${project.build.directory}</input>-->
+<!--                <mainJar>Client-1.0-SNAPSHOT-jar-with-dependencies.jar</mainJar>-->
+<!--                &lt;!&ndash; اسم الكلاس الرئيسي &ndash;&gt;-->
+<!--                <mainClass>com.chatsystem.client.ClientMain</mainClass>-->
+<!--                &lt;!&ndash; نوع الحزمة الناتجة: exe على Windows &ndash;&gt;-->
+<!--                <name>ChatClient</name>-->
+<!--                <type>EXE</type> &lt;!&ndash; هذا هو ما كنت تقصده أصلاً &ndash;&gt;-->
+<!--                &lt;!&ndash; الأيقونة إن وجدت &ndash;&gt;-->
+<!--                <icon>${project.basedir}/icon.ico</icon>-->
+<!--                &lt;!&ndash; إعدادات JavaFX &ndash;&gt;-->
+<!--                <modulePaths>-->
+<!--                    <modulePath>C:\Program Files\Java\javafx-sdk-23.0.1\lib</modulePath> &lt;!&ndash; غيره حسب جهازك &ndash;&gt;-->
+<!--                </modulePaths>-->
+<!--                <javaOptions>-->
+<!--                    <javaOption>&#45;&#45;add-modules</javaOption>-->
+<!--                    <javaOption>javafx.controls,javafx.fxml,javafx.web,javafx.graphics</javaOption>-->
+<!--                </javaOptions>-->
+<!--                <destination>${project.build.directory}/installer</destination>-->
+<!--                &lt;!&ndash; اسم المجلد الناتج &ndash;&gt;-->
+<!--                <appVersion>1.0.0</appVersion>-->
+<!--            </configuration>-->
+<!--        </plugin>-->
+
+        
+
         </plugins>
     </build>
 </project>
+
+
+
+<!-- Launch4j plugin for Windows EXE generation
+            <plugin>
+              <groupId>com.akathist.maven.plugins.launch4j</groupId>
+              <artifactId>launch4j-maven-plugin</artifactId>
+              <version>1.7.25</version>
+              <executions>
+                <execution>
+                  <id>l4j-clients</id>
+                  <phase>package</phase>
+                  <goals>
+                    <goal>launch4j</goal>
+                  </goals>
+                </execution>
+              </executions>
+              <configuration>
+                <outfile>target/ChatClient.exe</outfile>
+                <jar>target/Client-1.0-SNAPSHOT-jar-with-dependencies.jar</jar>
+                <dontWrapJar>false</dontWrapJar>
+                <headerType>gui</headerType>
+                <jvmOptions>
+                  <jvmOption>module-path</jvmOption>
+                  <jvmOption>C:\Program Files\Java\javafx-sdk-23.0.1\lib</jvmOption>
+                  <jvmOption>add-modules</jvmOption>
+                  <jvmOption>javafx.controls,javafx.fxml,javafx.web,javafx.media</jvmOption>
+                </jvmOptions>
+                <icon>${project.basedir}/icon.ico</icon>
+              </configuration>
+            </plugin> -->

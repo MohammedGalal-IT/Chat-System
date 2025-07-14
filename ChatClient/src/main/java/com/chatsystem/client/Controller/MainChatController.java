@@ -31,11 +31,17 @@ import com.chatsystem.client.network.ClientSocketManager;
 import com.chatsystem.client.network.Request;
 import com.chatsystem.client.util.Session;
 import com.chatsystem.client.util.viewUtil.ReceivedMessage;
+import com.chatsystem.client.util.viewUtil.ReceivedVideoMessage;
+import com.chatsystem.client.util.viewUtil.SendAudioMessage;
 import com.chatsystem.client.util.viewUtil.SendImageMessage;
 import com.chatsystem.client.util.viewUtil.SendMessage;
+import com.chatsystem.client.util.viewUtil.SendVideoMessage;
 import com.chatsystem.client.util.viewUtil.SmoothishScrollpaneUtil;
+import com.chatsystem.client.util.viewUtil.VideoMessageView;
+import com.chatsystem.client.util.viewUtil.AudioMessageView;
 import com.chatsystem.client.util.viewUtil.ImageMessageView;
 import com.chatsystem.client.util.viewUtil.MessageView;
+import com.chatsystem.client.util.viewUtil.ReceivedAudioMessage;
 import com.chatsystem.client.util.viewUtil.ReceivedImageMessage;
 import com.chatsystem.client.util.collectionsUtil.Pair;
 
@@ -210,6 +216,30 @@ public class MainChatController {
             }
     }
 
+    public VideoMessageView getVideoMessageView(Message message) {
+        LocalDateTime dateTime = message.getSentAt().toLocalDateTime();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm a");
+
+        if(message.getSender_id() == Session.currentUser.getUser_id())
+            {
+                return new SendVideoMessage(message.getContent(), getUserById(message.sender_id).getUsername(), dateTime.format(formatter), message.getFile_path_client());
+            } else{
+                return new ReceivedVideoMessage(message.getContent(),getUserById(message.sender_id).getUsername(), dateTime.format(formatter), message.getFile_path_client());
+            }
+    }
+
+    public AudioMessageView getAudioMessageView(Message message) {
+        LocalDateTime dateTime = message.getSentAt().toLocalDateTime();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm a");
+
+        if(message.getSender_id() == Session.currentUser.getUser_id())
+            {
+                return new SendAudioMessage(message.getContent(), getUserById(message.sender_id).getUsername(), dateTime.format(formatter), message.getFile_path_client());
+            } else{
+                return new ReceivedAudioMessage(message.getContent(),getUserById(message.sender_id).getUsername(), dateTime.format(formatter), message.getFile_path_client());
+            }
+    }
+
     public void intiChatScrollPane(){
         // إعداد ScrollPane
         chatScrollPane.setPannable(true); // تمكين السحب بالماوس
@@ -227,32 +257,27 @@ public class MainChatController {
     }
 
     private void messageLoader(Message message){
+        User receiverUser = getUserById(message.getSender_id());
+        if (message == null || receiverUser.getUser_id() != selectedUser.getUser_id()) {
+            return;
+        }
         switch (message.getMessage_type()) {
             case IMAGE:
-                loadImageMessage(message);
+                 messagesContainer.getChildren().add(getImageMessageView(message));
+                break;
+
+            case VIDEO:
+                messagesContainer.getChildren().add(getVideoMessageView(message));
+                break;
+            
+            case AUDIO:
+                messagesContainer.getChildren().add(getAudioMessageView(message));
                 break;
         
             default:
-                loadMessage(message);
+                 messagesContainer.getChildren().add(getMessageView(message));
         }
-    }
-
-    private void loadMessage(Message message){
-        User receiverUser = getUserById(message.getSender_id());
-    if (message != null && receiverUser.getUser_id() == selectedUser.getUser_id()) {
-        messagesContainer.getChildren().add(getMessageView(message));
-        return;
-    }
-    System.out.println("Can not display the received message");
-    }
-
-    private void loadImageMessage(Message message){
-        User receiverUser = getUserById(message.getSender_id());
-    if (message != null && receiverUser.getUser_id() == selectedUser.getUser_id()) {
-        messagesContainer.getChildren().add(getImageMessageView(message));
-        return;
-    }
-    System.out.println("Can not display the received message");
+        System.out.println("Can not display the received message");
     }
 
     public void setSelectedUser(User user) {
@@ -352,6 +377,14 @@ public class MainChatController {
         switch (msg.getMessage_type()) {
             case IMAGE:
                 messagesContainer.getChildren().add(getImageMessageView(msg));
+                break;
+
+            case VIDEO:
+                messagesContainer.getChildren().add(getVideoMessageView(msg));
+                break;
+
+            case AUDIO:
+                messagesContainer.getChildren().add(getAudioMessageView(msg));
                 break;
         
             default:

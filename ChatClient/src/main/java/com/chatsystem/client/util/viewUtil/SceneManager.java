@@ -22,8 +22,12 @@ public class SceneManager {
     }
     public static void switchScene(String fxmlFile, String title) {
         try {
-            Path viewPath = Paths.get(SceneManager.class.getResource("").toURI()).getParent().getParent().resolve("view/"+ fxmlFile);
-            Parent root = FXMLLoader.load(viewPath.toUri().toURL());
+            // Path viewPath = Paths.get(SceneManager.class.getResource("").toURI()).getParent().getParent().resolve("view/"+ fxmlFile);
+            // Parent root = FXMLLoader.load(viewPath.toUri().toURL());
+            Parent root = FXMLLoader.load(SceneManager.class.getResource("/com/chatsystem/client/view/" + fxmlFile));
+            if(root == null) {
+                System.out.println("Failed to load FXML file: " + fxmlFile);
+            }
             primaryStage.setTitle(title);
             primaryStage.setScene(new Scene(root));
             primaryStage.hide();
@@ -32,6 +36,8 @@ public class SceneManager {
             e.printStackTrace();    
         } catch(Exception e){
             System.out.println(e.getMessage());
+            System.out.println("Failed to load FXML file: " + fxmlFile + "\n\n");
+            e.printStackTrace();
         }
     }
 }
