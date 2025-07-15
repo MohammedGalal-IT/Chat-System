@@ -20,10 +20,14 @@ import javafx.application.Platform;
 
 public class LoginController {
 
-    @FXML private TextField emailField;
-    @FXML private PasswordField passwordField;
-    @FXML private Label errorLabel;
-    @FXML private Button loginButton;
+    @FXML
+    private TextField emailField;
+    @FXML
+    private PasswordField passwordField;
+    @FXML
+    private Label errorLabel;
+    @FXML
+    private Button loginButton;
 
     private ClientSocketManager clientSocketManager;
 
@@ -68,10 +72,7 @@ public class LoginController {
     }
 
     private void showError(String message) {
-        Alert alert = new Alert(AlertType.ERROR);
-        alert.setTitle("Login Error");
-        alert.setContentText(message);
-        alert.showAndWait();
+        FXAlert.showError("Login Error", message);
 
         errorLabel.setText(message);
         errorLabel.setVisible(true);

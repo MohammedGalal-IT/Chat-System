@@ -10,33 +10,25 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="420.0" prefWidth="459.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.chatsystem.client.Controller.LoginController">
+<AnchorPane prefHeight="600" prefWidth="350" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.chatsystem.client.Controller.LoginController" stylesheets="@../Assets/style.css">
     <children>
-        <VBox alignment="CENTER" layoutX="-144.8" layoutY="-13.6" prefHeight="498.0" prefWidth="459.0" spacing="15.0" style="-fx-padding: 50; -fx-background-color: #bbb7d4;" AnchorPane.bottomAnchor="-17.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <StackPane prefHeight="150.0" prefWidth="391.0">
-            <children>
-               <ImageView fitHeight="150.0" fitWidth="352.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@../Assets/chat_icon.png" />
-                  </image>
-               </ImageView>
-            </children>
-         </StackPane>
-
-            <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Login" textFill="#675da6" />
-
-            <TextField fx:id="emailField" promptText="Email" />
-            <PasswordField fx:id="passwordField" promptText="Password" />
-
-            <Button fx:id="loginButton" maxWidth="Infinity" onAction="#handleLogin" style="-fx-background-color: #3E2F73;" text="Login" textFill="WHITE">
-            <font>
-               <Font name="IBM Plex Sans Arabic Regular" size="12.0" />
-            </font></Button>
-            <Hyperlink onAction="#handleRegister" text="Don't have an account? Register" />
-
-            <Label fx:id="errorLabel" textFill="red" visible="false" />
+        <VBox alignment="CENTER" spacing="18" layoutX="0" layoutY="0" prefWidth="350" prefHeight="600" styleClass="login-root" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <StackPane prefHeight="150.0" prefWidth="391.0">
+                <children>
+                    <ImageView fitHeight="150.0" fitWidth="150.0" preserveRatio="true">
+                        <image>
+                            <Image url="@../Assets/chat_icon2.png" />
+                        </image>
+                    </ImageView>
+                </children>
+            </StackPane>
+            <TextField fx:id="emailField" promptText="Email" maxWidth="220" styleClass="login-field" />
+            <PasswordField fx:id="passwordField" promptText="Password" maxWidth="220" styleClass="login-field" />
+            <Button fx:id="loginButton" text="Login" maxWidth="220" styleClass="login-button" onAction="#handleLogin" />
+            <Label text="Don't have an account?" styleClass="login-label" />
+            <Hyperlink fx:id="signupLink" text="Sign up" styleClass="login-link" onAction="#handleRegister" />
+            <Label fx:id="errorLabel" visible="false" style="-fx-background-color: #e53935; -fx-text-fill: white; -fx-padding: 5 10; -fx-background-radius: 5;" />
         </VBox>
     </children>
 </AnchorPane>

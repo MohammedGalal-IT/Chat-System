@@ -54,7 +54,7 @@ public abstract class AudioMessageView extends HBox {
                     playPauseButton.setText("▶");
                 } else {
                     mediaPlayer.play();
-                     playPauseButton.setText("❚❚");
+                    playPauseButton.setText("❚❚");
                 }
             }
         });
@@ -72,7 +72,8 @@ public abstract class AudioMessageView extends HBox {
         audioControls = new HBox(10, playPauseButton, progressSlider, timeLabel);
         audioControls.setAlignment(Pos.CENTER_LEFT);
         audioControls.setPadding(new Insets(0, 0, 0, 0));
-        audioControls.setStyle("-fx-spacing: 10; -fx-alignment: CENTER_LEFT; -fx-background-color: #f3ebfa; -fx-background-radius: 8; -fx-padding: 3 10 3 10;");
+        audioControls.setStyle(
+                "-fx-spacing: 10; -fx-alignment: CENTER_LEFT; -fx-background-color: #f3ebfa; -fx-background-radius: 8; -fx-padding: 3 10 3 10;");
 
         // Bind slider to mediaPlayer
         if (mediaPlayer != null) {
@@ -95,7 +96,7 @@ public abstract class AudioMessageView extends HBox {
             progressSlider.setOnMousePressed(e -> {
                 mediaPlayer.seek(Duration.seconds(progressSlider.getValue()));
             });
-            
+
             progressSlider.setOnMouseDragged(e -> {
                 mediaPlayer.seek(Duration.seconds(progressSlider.getValue()));
             });
@@ -146,6 +147,7 @@ public abstract class AudioMessageView extends HBox {
         messageContainer.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 10; -fx-alignment: right;");
         messageContainer.setPadding(new Insets(15, 15, 10, 15));
         messageContainer.setSpacing(10);
+        messageText.setStyle("-fx-fill: white;");
 
         // Create text flow for message
         textFlow = new TextFlow();
@@ -157,7 +159,8 @@ public abstract class AudioMessageView extends HBox {
         footer = new HBox();
         footer.setPrefHeight(18.0);
         footer.setPrefWidth(418.0);
-        footer.setStyle("-fx-spacing: 10; -fx-background-color: #ffffff; -fx-padding: 2 10; -fx-background-radius: 20;");
+        footer.setStyle(
+                "-fx-spacing: 10; -fx-background-color: #ffffff; -fx-padding: 2 10; -fx-background-radius: 20;");
         VBox.setVgrow(footer, Priority.ALWAYS);
 
         // Create date container
@@ -177,7 +180,7 @@ public abstract class AudioMessageView extends HBox {
         footer.getChildren().addAll(userLabel, spacer, dateContainer);
 
         // Add components to message container
-        messageContainer.getChildren().addAll(audioControls, textFlow, footer);
+        messageContainer.getChildren().addAll(footer, audioControls, textFlow);
 
         // Add spacer and message container to main HBox
         hSpacer = new Region();
@@ -190,8 +193,7 @@ public abstract class AudioMessageView extends HBox {
 
     private void updateTimeLabel(Duration current, Duration total) {
         timeLabel.setText(
-            formatTime(current) + " / " + formatTime(total)
-        );
+                formatTime(current) + " / " + formatTime(total));
     }
 
     private String formatTime(Duration duration) {
@@ -201,6 +203,7 @@ public abstract class AudioMessageView extends HBox {
     }
 
     protected abstract void setupSpecificLayout();
+
     protected abstract void setupSpecificStyling();
 
     // Getters and setters for dynamic properties
@@ -222,6 +225,5 @@ public abstract class AudioMessageView extends HBox {
         }
         this.mediaPlayer = new MediaPlayer(media);
     }
-
 
 }

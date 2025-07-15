@@ -14,7 +14,7 @@ import javafx.scene.text.TextFlow;
 import java.awt.Desktop;
 
 public abstract class ImageMessageView extends HBox {
-    
+
     protected ImageView imageView;
     protected Text messageText;
     protected Label userLabel;
@@ -36,7 +36,7 @@ public abstract class ImageMessageView extends HBox {
         imageView.setFitWidth(635.0);
         imageView.setPickOnBounds(true);
         imageView.setPreserveRatio(true);
-        
+
         try {
             Image image = new Image(new File(imageUrl).toURI().toString());
             imageView.setImage(image);
@@ -45,7 +45,7 @@ public abstract class ImageMessageView extends HBox {
         }
 
         imageView.setOnMouseClicked(event -> {
-        try {
+            try {
                 File file = new File(imageUrl); // imagePath should be the absolute path to the image file
                 if (file.exists()) {
                     Desktop.getDesktop().open(file);
@@ -86,9 +86,13 @@ public abstract class ImageMessageView extends HBox {
         messageContainer.setAlignment(Pos.CENTER_LEFT);
         messageContainer.setPrefHeight(388.0);
         messageContainer.setPrefWidth(246.0);
-        messageContainer.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 10; -fx-alignment: right;"); // will be overridden
+        messageContainer.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 10; -fx-alignment: right;"); // will
+                                                                                                                      // be
+                                                                                                                      // overridden
         messageContainer.setPadding(new Insets(15, 15, 10, 15));
         messageContainer.setSpacing(10);
+
+        messageText.setStyle("-fx-fill: white;");
 
         // Create text flow for message
         textFlow = new TextFlow();
@@ -100,7 +104,10 @@ public abstract class ImageMessageView extends HBox {
         footer = new HBox();
         footer.setPrefHeight(18.0);
         footer.setPrefWidth(418.0);
-        footer.setStyle("-fx-spacing: 10; -fx-background-color: #ffffff; -fx-padding: 2 10; -fx-background-radius: 20;"); // will be overridden
+        footer.setStyle(
+                "-fx-spacing: 10; -fx-background-color: #ffffff; -fx-padding: 2 10; -fx-background-radius: 20;"); // will
+                                                                                                                  // be
+                                                                                                                  // overridden
         VBox.setVgrow(footer, Priority.ALWAYS);
 
         // Create date container
@@ -120,7 +127,7 @@ public abstract class ImageMessageView extends HBox {
         footer.getChildren().addAll(userLabel, spacer, dateContainer);
 
         // Add components to message container
-        messageContainer.getChildren().addAll(imageView, textFlow, footer);
+        messageContainer.getChildren().addAll(footer, imageView, textFlow);
 
         // Add spacer and message container to main HBox
         hSpacer = new Region();
@@ -132,6 +139,7 @@ public abstract class ImageMessageView extends HBox {
     }
 
     protected abstract void setupSpecificLayout();
+
     protected abstract void setupSpecificStyling();
 
     // Getters and setters for dynamic properties
