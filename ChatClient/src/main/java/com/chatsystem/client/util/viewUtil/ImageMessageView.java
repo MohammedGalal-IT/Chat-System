@@ -86,11 +86,10 @@ public abstract class ImageMessageView extends HBox {
         messageContainer.setAlignment(Pos.CENTER_LEFT);
         messageContainer.setPrefHeight(388.0);
         messageContainer.setPrefWidth(246.0);
-        messageContainer.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 10; -fx-alignment: right;"); // will
-                                                                                                                      // be
-                                                                                                                      // overridden
+        messageContainer.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 10; -fx-alignment: right;"); // will be overridden
         messageContainer.setPadding(new Insets(15, 15, 10, 15));
         messageContainer.setSpacing(10);
+
 
         messageText.setStyle("-fx-fill: white;");
 
@@ -105,9 +104,7 @@ public abstract class ImageMessageView extends HBox {
         footer.setPrefHeight(18.0);
         footer.setPrefWidth(418.0);
         footer.setStyle(
-                "-fx-spacing: 10; -fx-background-color: #ffffff; -fx-padding: 2 10; -fx-background-radius: 20;"); // will
-                                                                                                                  // be
-                                                                                                                  // overridden
+                "-fx-spacing: 10; -fx-background-color: #ffffff; -fx-padding: 2 10; -fx-background-radius: 20;"); // will be overridden
         VBox.setVgrow(footer, Priority.ALWAYS);
 
         // Create date container

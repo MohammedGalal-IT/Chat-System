@@ -33,15 +33,18 @@ import com.chatsystem.client.util.Session;
 import com.chatsystem.client.util.viewUtil.ReceivedMessage;
 import com.chatsystem.client.util.viewUtil.ReceivedVideoMessage;
 import com.chatsystem.client.util.viewUtil.SendAudioMessage;
+import com.chatsystem.client.util.viewUtil.SendDocumentMessage;
 import com.chatsystem.client.util.viewUtil.SendImageMessage;
 import com.chatsystem.client.util.viewUtil.SendMessage;
 import com.chatsystem.client.util.viewUtil.SendVideoMessage;
 import com.chatsystem.client.util.viewUtil.SmoothishScrollpaneUtil;
 import com.chatsystem.client.util.viewUtil.VideoMessageView;
 import com.chatsystem.client.util.viewUtil.AudioMessageView;
+import com.chatsystem.client.util.viewUtil.DocumentMessageView;
 import com.chatsystem.client.util.viewUtil.ImageMessageView;
 import com.chatsystem.client.util.viewUtil.MessageView;
 import com.chatsystem.client.util.viewUtil.ReceivedAudioMessage;
+import com.chatsystem.client.util.viewUtil.ReceivedDocumentMessage;
 import com.chatsystem.client.util.viewUtil.ReceivedImageMessage;
 import com.chatsystem.client.util.collectionsUtil.Pair;
 
@@ -289,6 +292,19 @@ public class MainChatController {
         }
     }
 
+    public DocumentMessageView getDocumentMessageView(Message message) {
+        LocalDateTime dateTime = message.getSentAt().toLocalDateTime();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm a");
+
+        if (message.getSender_id() == Session.currentUser.getUser_id()) {
+            return new SendDocumentMessage(message.getContent(), getUserById(message.sender_id).getUsername(),
+                    dateTime.format(formatter), message.getFile_path_client());
+        } else {
+            return new ReceivedDocumentMessage(message.getContent(), getUserById(message.sender_id).getUsername(),
+                    dateTime.format(formatter), message.getFile_path_client());
+        }
+    }
+
     public void intiChatScrollPane() {
         // إعداد ScrollPane
         chatScrollPane.setPannable(true); // تمكين السحب بالماوس
@@ -321,6 +337,10 @@ public class MainChatController {
 
             case AUDIO:
                 messagesContainer.getChildren().add(getAudioMessageView(message));
+                break;
+
+            case FILE:
+                messagesContainer.getChildren().add(getDocumentMessageView(message));
                 break;
 
             default:
@@ -440,6 +460,10 @@ public class MainChatController {
 
             case AUDIO:
                 messagesContainer.getChildren().add(getAudioMessageView(msg));
+                break;
+
+            case FILE:  
+                messagesContainer.getChildren().add(getDocumentMessageView(msg));
                 break;
 
             default:
