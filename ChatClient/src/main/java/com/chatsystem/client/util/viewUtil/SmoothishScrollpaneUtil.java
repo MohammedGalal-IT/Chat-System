@@ -1,6 +1,5 @@
 package com.chatsystem.client.util.viewUtil;
 
-
 import javafx.animation.Animation.Status;
 import javafx.animation.Interpolator;
 import javafx.animation.Transition;
@@ -11,11 +10,11 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 public class SmoothishScrollpaneUtil {
-    private final static int TRANSITION_DURATION = 200;
+	private final static int TRANSITION_DURATION = 200;
 	private final static double BASE_MODIFIER = 1;
 
-    public void init(ScrollPane scroll, VBox wrapper) {
-        wrapper.setOnScroll(new EventHandler<ScrollEvent>() {
+	public void init(ScrollPane scroll, VBox wrapper) {
+		wrapper.setOnScroll(new EventHandler<ScrollEvent>() {
 			private SmoothishTransition transition;
 
 			@Override
@@ -34,17 +33,17 @@ public class SmoothishScrollpaneUtil {
 				transition.play();
 			}
 		});
-    }
+	}
 
-    private static boolean playing(Transition t) {
+	private static boolean playing(Transition t) {
 		return t.getStatus() == Status.RUNNING;
 	}
 
-    private static boolean sameSign(double d1, double d2) {
+	private static boolean sameSign(double d1, double d2) {
 		return (d1 > 0 && d2 > 0) || (d1 < 0 && d2 < 0);
 	}
 
-    abstract class SmoothishTransition extends Transition {
+	abstract class SmoothishTransition extends Transition {
 		private final double mod;
 		private final double delta;
 
@@ -78,5 +77,5 @@ public class SmoothishScrollpaneUtil {
 			}
 		}
 	}
-    
+
 }

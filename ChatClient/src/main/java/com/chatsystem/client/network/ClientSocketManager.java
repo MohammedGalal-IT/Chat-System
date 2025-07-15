@@ -23,7 +23,7 @@ public class ClientSocketManager {
     private volatile boolean running = false;
     private Consumer<Response> onResponse;
 
-    private final String SERVER_ADDRESS = "104.238.215.46";
+    private final String SERVER_ADDRESS = "localhost";
     private final int SERVER_PORT = 8000;
 
     private ClientSocketManager() {

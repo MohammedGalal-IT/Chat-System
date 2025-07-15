@@ -17,7 +17,7 @@ import javafx.scene.text.TextFlow;
 import java.awt.Desktop;
 
 public abstract class VideoMessageView extends HBox {
-    
+
     protected MediaView mediaView;
     protected StackPane mediaStack;
     protected ImageView playIconView;
@@ -46,7 +46,8 @@ public abstract class VideoMessageView extends HBox {
         // Create the play icon overlay
         playIconView = new ImageView();
         try {
-            Image playIcon = new Image(getClass().getResource("/com/chatsystem/client/Assets/video_play_icon.png").toExternalForm());
+            Image playIcon = new Image(
+                    getClass().getResource("/com/chatsystem/client/Assets/video_play_icon.png").toExternalForm());
             playIconView.setImage(playIcon);
             playIconView.setFitWidth(80);
             playIconView.setFitHeight(80);
@@ -56,11 +57,11 @@ public abstract class VideoMessageView extends HBox {
         }
         playIconView.setMouseTransparent(true); // Let clicks pass through to mediaView
 
-
         // Create the switch icon (top-right corner)
         switchIconView = new ImageView();
         try {
-            Image switchIcon = new Image(getClass().getResource("/com/chatsystem/client/Assets/switch.png").toExternalForm());
+            Image switchIcon = new Image(
+                    getClass().getResource("/com/chatsystem/client/Assets/switch.png").toExternalForm());
             switchIconView.setImage(switchIcon);
             switchIconView.setFitWidth(32);
             switchIconView.setFitHeight(32);
@@ -99,7 +100,8 @@ public abstract class VideoMessageView extends HBox {
 
             // Play/pause on click (except on switch icon)
             mediaStack.setOnMouseClicked(event -> {
-                if (event.getTarget() == switchIconView) return;
+                if (event.getTarget() == switchIconView)
+                    return;
                 if (mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
                     mediaPlayer.pause();
                 } else {
@@ -155,9 +157,12 @@ public abstract class VideoMessageView extends HBox {
         messageContainer.setAlignment(Pos.CENTER_LEFT);
         messageContainer.setPrefHeight(388.0);
         messageContainer.setPrefWidth(246.0);
-        messageContainer.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 10; -fx-alignment: right;"); // will be overridden
+        messageContainer.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 10; -fx-alignment: right;"); // will
+                                                                                                                      // be
+                                                                                                                      // overridden
         messageContainer.setPadding(new Insets(15, 15, 10, 15));
         messageContainer.setSpacing(10);
+        messageText.setStyle("-fx-fill: white;");
 
         // Create text flow for message
         textFlow = new TextFlow();
@@ -169,7 +174,10 @@ public abstract class VideoMessageView extends HBox {
         footer = new HBox();
         footer.setPrefHeight(18.0);
         footer.setPrefWidth(418.0);
-        footer.setStyle("-fx-spacing: 10; -fx-background-color: #ffffff; -fx-padding: 2 10; -fx-background-radius: 20;"); // will be overridden
+        footer.setStyle(
+                "-fx-spacing: 10; -fx-background-color: #ffffff; -fx-padding: 2 10; -fx-background-radius: 20;"); // will
+                                                                                                                  // be
+                                                                                                                  // overridden
         VBox.setVgrow(footer, Priority.ALWAYS);
 
         // Create date container
@@ -189,7 +197,7 @@ public abstract class VideoMessageView extends HBox {
         footer.getChildren().addAll(userLabel, spacer, dateContainer);
 
         // Add components to message container
-        messageContainer.getChildren().addAll(mediaStack, textFlow, footer);
+        messageContainer.getChildren().addAll(footer, mediaStack, textFlow);
 
         // Add spacer and message container to main HBox
         hSpacer = new Region();
@@ -201,6 +209,7 @@ public abstract class VideoMessageView extends HBox {
     }
 
     protected abstract void setupSpecificLayout();
+
     protected abstract void setupSpecificStyling();
 
     // Getters and setters for dynamic properties
@@ -216,5 +225,4 @@ public abstract class VideoMessageView extends HBox {
         this.dateLabel.setText(date);
     }
 
-    
 }

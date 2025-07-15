@@ -14,15 +14,15 @@ public class SendAudioMessage extends AudioMessageView {
     @Override
     protected void setupSpecificLayout() {
         // Set right margin for sent messages
-        HBox.setMargin(this, new Insets(0, 100, 0, 0)); 
+        HBox.setMargin(this, new Insets(0, 100, 0, 0));
         this.getChildren().addAll(messageContainer, hSpacer);
     }
 
     @Override
     protected void setupSpecificStyling() {
-        messageContainer.setStyle(messageContainer.getStyle() + 
-            "-fx-background-color: #d7c8e3;");
+        messageContainer.setStyle(messageContainer.getStyle() +
+                "-fx-background-color: #8A034b; -fx-background-radius: 0 20 20 20;");
         footer.setStyle(footer.getStyle() + "-fx-background-color: #f3ebfa;");
     }
-    
+
 }
