@@ -18,7 +18,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="691.0" prefWidth="1016.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.chatsystem.client.Controller.MainChatController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="691.0" prefWidth="1117.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.chatsystem.client.Controller.MainChatController">
    <!-- Sidebar (Contacts) -->
    <left>
       <VBox alignment="TOP_CENTER" prefHeight="691.0" prefWidth="260.0" spacing="10" style="-fx-background-color: #f8f7fa; -fx-padding: 16 8 16 8; -fx-border-color: #e0e0e0; -fx-border-width: 0 1 0 0;" BorderPane.alignment="CENTER">
@@ -47,7 +47,7 @@
 
    <!-- Chat area -->
    <center>
-      <VBox prefHeight="484.0" prefWidth="572.0" spacing="5.0" style="-fx-padding: 2 7 2 2; -fx-background-color: #fff; -fx-border-color: #fff;" BorderPane.alignment="CENTER">
+      <VBox prefHeight="691.0" prefWidth="808.0" spacing="5.0" style="-fx-padding: 2 7 2 2; -fx-background-color: #fff; -fx-border-color: #fff;" BorderPane.alignment="CENTER">
         <!-- Title Bar -->
          <VBox spacing="0" style="-fx-background-color: #8A034b; -fx-padding: 5 20; -fx-background-radius: 5;">
            <children>
