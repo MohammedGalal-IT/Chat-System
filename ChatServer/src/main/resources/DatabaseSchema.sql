@@ -34,17 +34,5 @@ CREATE TABLE messages (
 );
 
 
-CREATE TABLE attachments (
-    attachment_id INT AUTO_INCREMENT PRIMARY KEY,
-    message_id INT NOT NULL,
-    file_type VARCHAR(20),        -- مثال: mp3, mp4, png
-    file_size INT,                -- بالكيلوبايت
-    original_name VARCHAR(255),   -- الاسم الأصلي للملف
-    server_path VARCHAR(255),     -- المسار الكامل في الخادم
-
-    FOREIGN KEY (message_id) REFERENCES messages(id) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-
 
 
