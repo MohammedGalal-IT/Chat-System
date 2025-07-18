@@ -177,7 +177,7 @@ com.chatsystem.client.ClientMain
 
 ---
 
-📷 Screenshots
+## 📷 Screenshots
 
 <img title="Login View" alt="Login View" src="https://github.com/MohammedGalal-IT/Chat-System/blob/main/GIFs/Login%20View.gif">
 
