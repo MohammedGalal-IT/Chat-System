@@ -47,8 +47,8 @@ ChatSystem/
 │   │   ├── util/                  # Shared utilities
 │   │   └── ClientMain.java        # Entry point
 │   ├── src/main/com/chatsystem/client/resources/
-│   │   └── assets/                 # App icons and media
-│   │   └── view/                 # App icons and media
+│   │   └── assets/                 # App Assets
+│   │   └── view/                 # Javafx FXML files
 │   └── pom.xml                    # Maven config
 ```
 
