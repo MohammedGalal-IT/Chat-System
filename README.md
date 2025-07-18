@@ -185,7 +185,16 @@ com.chatsystem.client.ClientMain
 
 <img title="Main View" alt="Main View" src="https://github.com/MohammedGalal-IT/Chat-System/blob/main/GIFs/Main%20View.gif">
 
+---
 
+## Repository:
+https://github.com/MohammedGalal-IT/Chat-System
+
+---
+
+## Developers' Githubs:
+- Mohammed Galal: https://github.com/MohammedGalal-IT
+- Ahmed Al-Samadi: https://github.com/Al-Samadi
 
 ---
 
