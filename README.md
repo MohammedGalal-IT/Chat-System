@@ -27,7 +27,7 @@ ChatSystem/
 │   ├── src/main/java/com/chatsystem/server/
 │   │   ├── config/                # Configuration classes
 │   │   ├── controller/            # Server-side controllers
-│   │   ├── dataAccess/                   # Database access layer
+│   │   ├── dataAccess/            # Database access layer
 │   │   ├── model/                 # Entity classes
 │   │   ├── network/               # Socket logic
 │   │   ├── services/              # Business logic
@@ -47,8 +47,8 @@ ChatSystem/
 │   │   ├── util/                  # Shared utilities
 │   │   └── ClientMain.java        # Entry point
 │   ├── src/main/com/chatsystem/client/resources/
-│   │   └── assets/                 # App Assets
-│   │   └── view/                 # Javafx FXML files
+│   │   └── assets/                # App Assets
+│   │   └── view/                  # Javafx FXML files
 │   └── pom.xml                    # Maven config
 ```
 
