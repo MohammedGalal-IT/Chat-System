@@ -216,7 +216,7 @@ Please follow clean code practices and write descriptive commit messages.
 For questions, suggestions, or collaboration opportunities:
 
 - 📧 **Mohammed Galal Ahmed** — [MohammedGalal7777@hotmail.com](mailto:MohammedGalal7777@hotmail.com)  
-- 📧 **Ahmed Al-Samadi** — [ahmedalsamadi.dev@gmail.com](mailto:ahmedalsamadi.dev@gmail.com)
+- 📧 **Ahmed Al-Samadi** — [alsamadi3c@gmail.com](mailto:alsamadi3c@gmail.com)
 
 ---
 
