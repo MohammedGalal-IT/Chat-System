@@ -177,6 +177,18 @@ com.chatsystem.client.ClientMain
 
 ---
 
+📷 Screenshots
+
+<img title="Login View" alt="Login View" src="https://github.com/MohammedGalal-IT/Chat-System/blob/main/GIFs/Login%20View.gif">
+
+<img title="SignUp View" alt="SignUp View" src="https://github.com/MohammedGalal-IT/Chat-System/blob/main/GIFs/SignUp%20View.gif">
+
+<img title="Main View" alt="Main View" src="https://github.com/MohammedGalal-IT/Chat-System/blob/main/GIFs/Main%20View.gif">
+
+
+
+---
+
 ## 🎯 Contributing
 
 We welcome contributions!
